@@ -97,6 +97,6 @@ I have to thank to some people and groups that make me develop this application
 
 # TODO 
 
-* Add Metabase and first configuration for add a scoreboard and for BI Analysis
+* Add Metabase and first configuration for add a scoreboard (BI Analysis)
 * Fix Swagger output for access to that endpoint
 * Add more mechanism for the conquest
