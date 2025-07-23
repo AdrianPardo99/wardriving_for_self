@@ -1,0 +1,10 @@
+__pycache__/
+.vscode
+
+# local virtual environments
+.env
+.venv
+
+media/
+staticfiles/
+*.log

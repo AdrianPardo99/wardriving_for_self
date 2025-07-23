@@ -1,0 +1,53 @@
+volumes:
+  wardriving_postgres_db: {}
+  redis_data: {}
+
+services:
+  wardrive:
+    build: .
+    volumes:
+      - .:/code
+    command: /code/start.sh
+    env_file: .env
+    ports:
+      - "8010:8000"
+    depends_on:
+      - wardrive_db
+    stdin_open: true
+    tty: true
+    restart: on-failure
+  wardrive_db:
+    restart: on-failure
+    image: postgres:17
+    environment:
+      POSTGRES_PASSWORD: postgres
+    volumes:
+      - wardriving_postgres_db:/var/lib/postgresql/data:Z
+  redis:  # Define the Redis service
+    image: "redis:alpine"
+    volumes:
+      - redis_data:/data
+    restart: on-failure
+
+  celery:
+    build: .
+    command: /code/start_celery.sh
+    volumes:
+      - .:/code
+    depends_on:
+      - wardrive
+      - redis
+    env_file: .env
+    restart: on-failure
+
+  celery-beat:
+    build: .
+    command: /code/start_celery_beat.sh
+    volumes:
+      - .:/code
+    depends_on:
+      - wardrive
+      - redis
+    env_file: .env
+    restart: on-failure
+    
