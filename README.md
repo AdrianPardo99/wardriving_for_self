@@ -88,10 +88,10 @@ $BASE_URL/api/v1/files-uploaded/
 
 I have to thank to some people and groups that make me develop this application
 
-
+* B3ts0b3ts4
 * Ekoparty (Ekogroup Mx)
 * misskernel
-* samo_harakiri_2600
+* samo_harakiri_2600 (@Dr0xharakiri)
 * RF Village MX
 * And the Mexico Cibersecurity Comunity that want to use the idea
 
