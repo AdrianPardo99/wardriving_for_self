@@ -11,6 +11,22 @@ For a quick overview:
 * Celery, Celery-Beat for paralallel files processing
 * For a quick deploy you can choose your compose technology that you prefer (Docker-Compose, Podman-Compose)
 
+# Preview of the application related to BI
+
+![alt text](https://raw.githubusercontent.com/AdrianPardo99/wardriving_for_self/refs/heads/main/demos/map.png)
+
+SQL File: D00
+
+![alt text](https://raw.githubusercontent.com/AdrianPardo99/wardriving_for_self/refs/heads/main/demos/table_and_more_analysis.png)
+
+SQL Files: D01, D02, D03
+
+![alt text](https://raw.githubusercontent.com/AdrianPardo99/wardriving_for_self/refs/heads/main/demos/analysis_per_participant.png)
+
+SQL Files: D04, D05
+
+
+
 # Initial deploy
 
 For a well deploy of the application you need to create the `.env` file for work 
@@ -115,6 +131,6 @@ I have to thank to some people and groups that make me develop this application
 
 # TODO 
 
-* Add Metabase and first configuration for add a scoreboard (BI Analysis)
+* Add Metabase first configuration for add a scoreboard (BI Analysis)
 * Fix Swagger output for access to that endpoint
 * Add more mechanism for the conquest
