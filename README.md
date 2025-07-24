@@ -83,16 +83,34 @@ $BASE_URL/api/v1/files-uploaded/
     "files": ["enumerated files for process (max 100 files) per request"]
 }
 ```
+## Metabase set up
+
+I have to say sorry but in this moment I cannot add a quick setup for deploy all the integration with metabase, maybe in next updates 
+
+You need to do the first set up the application with your own data and set the variables related to your conection with the data base so you need to access to your url: `$BASE_METABASE_URL/admin/databases` and configure with the data related to your `.env` file if you know about the configuration related and how Podman or Containers work internal with the dns and naming of service you can go into your conection and creation of your dashboard using the query or modify as you wish in directory `sql_bi_sources/`, but if you follow the instruction you need to add the server host using the variable of `$DB_HOST` value for your database conection.
+
+Finally when you configure and explore about the configuration from database, you need to add a Question or SQL Query in the button `+ New > SQL` and you can add all the query information related to the database and have fun and do your activity with wardriving
+
+## How to finish the conquest don't ammit more processing of the files
+
+You can enter to your admin panel and change the value of `AllowToLoadData` instance and with that everyone can upload them files and logs into the API, but it will not process anymore til' you enable it again, or if you has the physical access to your terminal or where you host the application, you only need to enter in the interactive shell and write
+
+```python
+from apps.files.models import AllowToLoadData
+AllowToLoadData.objects.all().update(active=False)
+```
+
+And with that you disable the processing of the files and nobody can get more SSID points.
 
 # Special thanks
 
 I have to thank to some people and groups that make me develop this application
 
 * B3ts0b3ts4
-* Ekoparty (Ekogroup Mx)
-* misskernel
+* [Ekoparty (Ekogroup Mx)](https://www.instagram.com/ekogroup_mx/)
+* [misskernel](https://www.instagram.com/misskernel/)
 * [samo_harakiri_2600/@Dr0xharakiri](https://github.com/Dr0xharakiri) 
-* RF Village MX
+* [RF Village MX](https://www.instagram.com/rf_village_mx/)
 * And the Mexico Cibersecurity Comunity that want to use the idea
 
 # TODO 
