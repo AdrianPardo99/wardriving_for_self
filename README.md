@@ -91,7 +91,7 @@ You need to do the first set up the application with your own data and set the v
 
 Finally when you configure and explore about the configuration from database, you need to add a Question or SQL Query in the button `+ New > SQL` and you can add all the query information related to the database and have fun and do your activity with wardriving
 
-## How to finish the conquest don't ammit more processing of the files
+## How to finish the conquest don't admit more processing of the files
 
 You can enter to your admin panel and change the value of `AllowToLoadData` instance and with that everyone can upload them files and logs into the API, but it will not process anymore til' you enable it again, or if you has the physical access to your terminal or where you host the application, you only need to enter in the interactive shell and write
 
