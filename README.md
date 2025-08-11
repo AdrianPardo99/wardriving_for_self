@@ -122,7 +122,6 @@ And with that you disable the processing of the files and nobody can get more SS
 
 I have to thank to some people and groups that make me develop this application
 
-* B3ts0b3ts4
 * [Ekoparty (Ekogroup Mx)](https://www.instagram.com/ekogroup_mx/)
 * [misskernel](https://www.instagram.com/misskernel/)
 * [samo_harakiri_2600/@Dr0xharakiri](https://github.com/Dr0xharakiri) 
