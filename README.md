@@ -133,3 +133,4 @@ I have to thank to some people and groups that make me develop this application
 * Add Metabase first configuration for add a scoreboard (BI Analysis)
 * Fix Swagger output for access to that endpoint
 * Add more mechanism for the conquest
+* One service as proxy for access in one service with redirection to BI and API or another service if it needed in future
