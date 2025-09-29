@@ -118,10 +118,26 @@ AllowToLoadData.objects.all().update(active=False)
 
 And with that you disable the processing of the files and nobody can get more SSID points.
 
+## Available technologies and formats from wardriving
+
+# Technology
+
+For use this app for wardriving you can accept the next technologies in different firmwares:
+
+* WIFI - RF Village MX Firmware, Marauder ESP32 Firmware, Minino Firmware
+* BLE - Marauder ESP32 Firmware
+* LTE - RF Village MX Firmware
+
+_*Note:*_ If you want to provide another technology please open an Issue and give me the header in the next version upload the app
+
+# Formats
+
+For accept the process and save into the app you need to understand the current format of the hardware devices, for check is part you can read the formats in the next file `wardrive/apps/files/utils.py` 
 # Special thanks
 
 I have to thank to some people and groups that make me develop this application
 
+* [Tyr/@Infrn0](https://www.instagram.com/r3pt1li0) for provide some sources and help me to understand another technologies for the conquest/wardrive
 * [Ekoparty (Ekogroup Mx)](https://www.instagram.com/ekogroup_mx/)
 * [misskernel](https://www.instagram.com/misskernel/)
 * [samo_harakiri_2600/@Dr0xharakiri](https://github.com/Dr0xharakiri) 

@@ -20,14 +20,14 @@ def process_file(file_pk):
         return f"No processing function found for source: {device_source}"
     try:
         file_path = file_obj.source.path
-        new_added, updated = class_process_function(
+        new_added, updated, ignored = class_process_function(
             file_path=file_path,
             device_source=device_source,
             uploaded_by=file_obj.uploaded_by,
         )
-        total = new_added + updated
+        total = new_added + updated + ignored
         file_obj.is_procesed = True
         file_obj.save()
-        return f"File {file_pk} processed successfully. Total of records in file {total}, Total new records {new_added}, Total updated found records {updated}"
+        return f"File {file_pk} processed successfully. Total of records in file {total}, Total new records {new_added}, Total updated found records {updated}, Total ignored {ignored}"
     except Exception as e:
         return f"Error while processing file {file_pk}: {str(e)}"

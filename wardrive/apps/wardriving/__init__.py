@@ -7,6 +7,8 @@ class SourceDevice:
     MARAUDER_V6 = "marauder v6"
     FLIPPER_BFFB = "flipper bffb"
     MARAUDER_ESP32 = "marauder esp32"
+    RF_CUSTOM_FIRMWARE_WIFI = "rf custom firmware wifi"
+    RF_CUSTOM_FIRMWARE_LTE = "rf custom firmware lte"
     OTHER = "other"
 
     CHOICES = [
@@ -18,5 +20,7 @@ class SourceDevice:
         (MARAUDER_V6, MARAUDER_V6),
         (FLIPPER_BFFB, FLIPPER_BFFB),
         (MARAUDER_ESP32, MARAUDER_ESP32),
+        (RF_CUSTOM_FIRMWARE_WIFI, RF_CUSTOM_FIRMWARE_WIFI),
+        (RF_CUSTOM_FIRMWARE_LTE, RF_CUSTOM_FIRMWARE_LTE),
         (OTHER, OTHER),
     ]

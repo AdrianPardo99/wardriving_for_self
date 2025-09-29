@@ -33,6 +33,5 @@ class MultipleFileUploadedCreateSerializer(serializers.Serializer):
             )
             for f in files
         ]
-        
-        return instances
 
+        return instances

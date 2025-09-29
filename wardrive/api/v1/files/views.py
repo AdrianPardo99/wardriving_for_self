@@ -34,14 +34,14 @@ upload_params = [
         in_=openapi.IN_FORM,
         type=openapi.TYPE_STRING,
         required=True,
-        description="Source device"
+        description="Source device",
     ),
     openapi.Parameter(
         name="uploaded_by",
         in_=openapi.IN_FORM,
         type=openapi.TYPE_STRING,
         required=False,
-        description="Uploader identifier"
+        description="Uploader identifier",
     ),
 ]
 
@@ -69,8 +69,7 @@ class FilesUploadedViewSet(viewsets.ModelViewSet):
         return self.actions_serializers.get(self.action, FileUploadedListSerializer)
 
     @swagger_auto_schema(
-        manual_parameters=upload_params,
-        responses={201: "Files uploaded successfully"}
+        manual_parameters=upload_params, responses={201: "Files uploaded successfully"}
     )
     def create(self, request, *args, **kwargs):
         serializer = self.get_serializer(data=request.data)
