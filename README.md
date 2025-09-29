@@ -21,7 +21,7 @@ By using this application, the user acknowledges and accepts that any unauthoriz
 
 For a quick overview:
 
-* Containers for a simple self hostage deploy (Docker, Podman you can choose what you prefer)
+* Containers for a simple self hostage deploy (Docker, Podman you can choose whichever you prefer.)
 * Python + Django + Django-Rest-Framework (DRF)
 * Celery, Celery-Beat for paralallel files processing
 * For a quick deploy you can choose your compose technology that you prefer (Docker-Compose, Podman-Compose)
