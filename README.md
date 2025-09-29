@@ -24,6 +24,27 @@ For a quick overview:
 * Celery, Celery-Beat for paralallel files processing
 * For a quick deploy you can choose your compose technology that you prefer (Docker-Compose, Podman-Compose)
 
+# Available technologies, formats and hardware from wardriving
+
+## Technology
+
+For use this app for wardriving you can accept the next technologies in different firmwares:
+
+* WIFI - RF Village MX Firmware, Marauder ESP32 Firmware, Minino Firmware
+* BLE - Marauder ESP32 Firmware
+* LTE - RF Village MX Firmware
+
+_*Note:*_ If you want to provide another technology please open an Issue and give me the header in the next version upload the app
+
+## Formats
+
+For accept the process and save into the app you need to understand the current format of the hardware devices, for check is part you can read the formats in the next file `wardrive/apps/files/utils.py`
+
+## Hardware
+
+* [Minino](https://github.com/ElectronicCats/Minino) Options in app: `minino`
+* [ESP32 Maruader](https://github.com/justcallmekoko/ESP32Marauder/) Options in app: `flipper dev board`, `flipper dev board pro`, `marauder v4`, `marauder v6`, `flipper bffb`, `marauder esp32`
+* [LILYGO T-SIM7000G-16MB](https://randomnerdtutorials.com/lilygo-t-sim7000g-esp32-lte-gprs-gps/) this is a custom firmware not provide (happy hacking learning). Options in app: `rf custom firmware wifi`, `rf custom firmware lte`
 # Preview of the application related to BI
 
 ![alt text](https://raw.githubusercontent.com/AdrianPardo99/wardriving_for_self/refs/heads/main/demos/map.png)
@@ -131,21 +152,8 @@ AllowToLoadData.objects.all().update(active=False)
 
 And with that you disable the processing of the files and nobody can get more SSID points.
 
-# Available technologies and formats from wardriving
 
-## Technology
 
-For use this app for wardriving you can accept the next technologies in different firmwares:
-
-* WIFI - RF Village MX Firmware, Marauder ESP32 Firmware, Minino Firmware
-* BLE - Marauder ESP32 Firmware
-* LTE - RF Village MX Firmware
-
-_*Note:*_ If you want to provide another technology please open an Issue and give me the header in the next version upload the app
-
-## Formats
-
-For accept the process and save into the app you need to understand the current format of the hardware devices, for check is part you can read the formats in the next file `wardrive/apps/files/utils.py` 
 # Special thanks
 
 I have to thank to some people and groups that make me develop this application
