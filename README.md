@@ -10,9 +10,7 @@ Its purpose is to teach techniques for collecting and analyzing wireless data in
 ## ⚠️ Important Warning:
 
 * Using this application outside the educational or contest context may violate local, national, and international laws related to privacy, cybersecurity, and telecommunications.
-
 * The creators of this application are not responsible for any misuse or for activities that infringe upon the law or third-party rights.
-
 * The sole objective is for participants to gain practical experience and compete by collecting hardware data within a regulated, ethical, and supervised framework.
 
 By using this application, the user acknowledges and accepts that any unauthorized use is their sole responsibility.
