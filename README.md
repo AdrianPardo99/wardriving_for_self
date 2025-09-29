@@ -118,9 +118,9 @@ AllowToLoadData.objects.all().update(active=False)
 
 And with that you disable the processing of the files and nobody can get more SSID points.
 
-## Available technologies and formats from wardriving
+# Available technologies and formats from wardriving
 
-# Technology
+## Technology
 
 For use this app for wardriving you can accept the next technologies in different firmwares:
 
@@ -130,7 +130,7 @@ For use this app for wardriving you can accept the next technologies in differen
 
 _*Note:*_ If you want to provide another technology please open an Issue and give me the header in the next version upload the app
 
-# Formats
+## Formats
 
 For accept the process and save into the app you need to understand the current format of the hardware devices, for check is part you can read the formats in the next file `wardrive/apps/files/utils.py` 
 # Special thanks
