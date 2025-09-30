@@ -107,14 +107,14 @@ USE_I18N = True
 
 USE_TZ = True
 
-
+FORCE_SCRIPT_NAME = env("FORCE_SCRIPT_NAME", default="")
 # Static files (CSS, JavaScript, Images)
 STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
-STATIC_URL = "static/"
+STATIC_URL = os.path.join(FORCE_SCRIPT_NAME, "static/")
 STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 
 # Media Config
-MEDIA_URL = "/media/"
+MEDIA_URL = os.path.join(FORCE_SCRIPT_NAME, "/media/")
 MEDIA_ROOT = os.path.join(BASE_DIR, "media")
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
@@ -200,3 +200,5 @@ CELERY_RESULT_SERIALIZER = "json"
 CELERY_TIMEZONE = "America/Mexico_City"
 
 APPEND_SLASH = False
+USE_X_FORWARDED_HOST = True
+CSRF_TRUSTED_ORIGINS = ["http://0.0.0.0:8000/"]
