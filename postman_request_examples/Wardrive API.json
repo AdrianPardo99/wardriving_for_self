@@ -1,0 +1,235 @@
+{
+	"info": {
+		"_postman_id": "118d0ff2-9d91-4751-8514-9171c12072f2",
+		"name": "Wardrive API",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "18810826"
+	},
+	"item": [
+		{
+			"name": "Upload flipper zero sources",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "device_source",
+							"value": "flipper dev board",
+							"type": "text"
+						},
+						{
+							"key": "uploaded_by",
+							"value": "{{author}}",
+							"type": "text"
+						},
+						{
+							"key": "files",
+							"type": "file",
+							"src": []
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost:8010/api/v1/files-uploaded/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8010",
+					"path": [
+						"api",
+						"v1",
+						"files-uploaded",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Upload minino sources",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "device_source",
+							"value": "minino",
+							"type": "text"
+						},
+						{
+							"key": "uploaded_by",
+							"value": "{{author}}",
+							"type": "text"
+						},
+						{
+							"key": "files",
+							"type": "file",
+							"src": []
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost:8010/api/v1/files-uploaded/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8010",
+					"path": [
+						"api",
+						"v1",
+						"files-uploaded",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Upload LTE RF sources",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "device_source",
+							"value": "rf custom firmware lte",
+							"type": "text"
+						},
+						{
+							"key": "uploaded_by",
+							"value": "{{author}}",
+							"type": "text"
+						},
+						{
+							"key": "files",
+							"type": "file",
+							"src": []
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost:8010/api/v1/files-uploaded/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8010",
+					"path": [
+						"api",
+						"v1",
+						"files-uploaded",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Upload Wifi RF sources",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "device_source",
+							"value": "rf custom firmware wifi",
+							"type": "text"
+						},
+						{
+							"key": "uploaded_by",
+							"value": "{{author}}",
+							"type": "text"
+						},
+						{
+							"key": "files",
+							"type": "file",
+							"src": []
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost:8010/api/v1/files-uploaded/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8010",
+					"path": [
+						"api",
+						"v1",
+						"files-uploaded",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Upload BLE Marauder V6 sources",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "device_source",
+							"value": "marauder v6",
+							"type": "text"
+						},
+						{
+							"key": "uploaded_by",
+							"value": "{{author}}",
+							"type": "text"
+						},
+						{
+							"key": "files",
+							"type": "file",
+							"src": []
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost:8010/api/v1/files-uploaded/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8010",
+					"path": [
+						"api",
+						"v1",
+						"files-uploaded",
+						""
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
