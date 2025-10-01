@@ -35,7 +35,7 @@
 					]
 				},
 				"url": {
-					"raw": "http://localhost:8010/api/v1/files-uploaded/",
+					"raw": "http://localhost:8000/wardriving/api/v1/files-uploaded/",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -80,7 +80,7 @@
 					]
 				},
 				"url": {
-					"raw": "http://localhost:8010/api/v1/files-uploaded/",
+					"raw": "http://localhost:8000/wardriving/api/v1/files-uploaded/",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -125,7 +125,7 @@
 					]
 				},
 				"url": {
-					"raw": "http://localhost:8010/api/v1/files-uploaded/",
+					"raw": "http://localhost:8000/wardriving/api/v1/files-uploaded/",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -170,7 +170,7 @@
 					]
 				},
 				"url": {
-					"raw": "http://localhost:8010/api/v1/files-uploaded/",
+					"raw": "http://localhost:8000/wardriving/api/v1/files-uploaded/",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -215,7 +215,7 @@
 					]
 				},
 				"url": {
-					"raw": "http://localhost:8010/api/v1/files-uploaded/",
+					"raw": "http://localhost:8000/wardriving/api/v1/files-uploaded/",
 					"protocol": "http",
 					"host": [
 						"localhost"
