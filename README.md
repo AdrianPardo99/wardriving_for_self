@@ -170,4 +170,5 @@ I have to thank to some people and groups that make me develop this application
 
 * Add Metabase first configuration for add a scoreboard (BI Analysis)
 * Fix Swagger output for access to that endpoint
+* Add support to all wardriving sources from Minino
 * Add more mechanism for the conquest
