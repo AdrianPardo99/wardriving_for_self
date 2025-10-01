@@ -45,7 +45,7 @@ class Wardriving(models.Model):
         verbose_name_plural = "Wardriving Data"
 
     def __str__(self):
-        return f"{self.SSID or 'Unknown SSID'} ({self.MAC})"
+        return (f"{(self.ssid or self.type) or "Unknown Device"} ({self.mac})")
 
     def is_default_data(self):
         return self.current_latitude == 0 and self.current_longitude == 0

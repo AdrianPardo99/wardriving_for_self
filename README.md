@@ -89,6 +89,7 @@ REDIS_DB=0                                  # Select and change as you wish your
 # Celery Configuration
 CELERY_BROKER_URL=redis://redis:6379/0      # Same for above config is this for default
 CELERY_RESULT_BACKEND=redis://redis:6379/0  # Just same
+FORCE_SCRIPT_NAME=/wardriving               # If you move something in the nginx.conf change this variable, if not just do nothing
 ```
 
 With this you only need to execute
@@ -170,4 +171,3 @@ I have to thank to some people and groups that make me develop this application
 * Add Metabase first configuration for add a scoreboard (BI Analysis)
 * Fix Swagger output for access to that endpoint
 * Add more mechanism for the conquest
-* One service as proxy for access in one service with redirection to BI and API or another service if it needed in future
