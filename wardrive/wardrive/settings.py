@@ -201,4 +201,13 @@ CELERY_TIMEZONE = "America/Mexico_City"
 
 APPEND_SLASH = False
 USE_X_FORWARDED_HOST = True
-CSRF_TRUSTED_ORIGINS = ["http://0.0.0.0:8000/"]
+CSRF_TRUSTED_ORIGINS = [
+    "http://localhost:8000",
+    "http://127.0.0.1:8000",
+    "http://*.ngrok.io",
+    "https://*.ngrok.io",
+    "http://*.ngrok-free.app",
+    "https://*.ngrok-free.app",
+    "http://*.tcp.ngrok.io",
+    "https://*.tcp.ngrok.io",
+]
