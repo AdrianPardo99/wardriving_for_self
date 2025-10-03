@@ -2,17 +2,17 @@ from django.db import models
 from django.utils.timezone import now
 
 from . import SourceDevice
+from apps.core.models import WardriveBaseModel
 
 
-class Wardriving(models.Model):
+class Wardriving(WardriveBaseModel):
     mac = models.CharField(
-        max_length=17, verbose_name="MAC Address"
+        max_length=17, verbose_name="MAC Address", default="AA:BB:CC:DD:EE:FF"
     )  # Format: XX:XX:XX:XX:XX:XX
     ssid = models.CharField(max_length=255, verbose_name="SSID", default="")
     auth_mode = models.CharField(
         max_length=50, verbose_name="Authentication Mode", default=""
     )
-    first_seen = models.DateTimeField(verbose_name="First Seen", default=now)
     channel = models.IntegerField(verbose_name="Channel")
     rssi = models.IntegerField(verbose_name="RSSI (Signal Strength)")
     current_latitude = models.DecimalField(
@@ -31,13 +31,6 @@ class Wardriving(models.Model):
         max_digits=6, decimal_places=2, verbose_name="Accuracy (Meters)", default=0
     )
     type = models.CharField(max_length=50, verbose_name="Type", default="WIFI")
-    device_source = models.CharField(
-        max_length=50,
-        verbose_name="Source",
-        choices=SourceDevice.CHOICES,
-        default=SourceDevice.UNKNOWN,
-    )
-    uploaded_by = models.TextField(verbose_name="Uploaded by", default="")
 
     class Meta:
         db_table = "wardriving"
@@ -45,13 +38,14 @@ class Wardriving(models.Model):
         verbose_name_plural = "Wardriving Data"
 
     def __str__(self):
-        return (f"{(self.ssid or self.type) or "Unknown Device"} ({self.mac})")
+        device = self.ssid or self.type or "Unknown Device"
+        return f"{device} ({self.mac})"
 
     def is_default_data(self):
         return self.current_latitude == 0 and self.current_longitude == 0
 
 
-class LTEWardriving(models.Model):
+class LTEWardriving(WardriveBaseModel):
     # From csv device content file
     mcc = models.IntegerField(verbose_name="MCC (Mobile Country Code)")
     mnc = models.IntegerField(verbose_name="MNC (Mobile Network Code)")
@@ -72,15 +66,6 @@ class LTEWardriving(models.Model):
         max_digits=9, decimal_places=6, verbose_name="Longitude", default=0
     )
     tech = models.TextField(verbose_name="Technology", default="LTE")
-    # Custom config for conquest and identify origin of source and when its founded and by who
-    first_seen = models.DateTimeField(verbose_name="First Seen", default=now)
-    uploaded_by = models.TextField(verbose_name="Uploaded by", default="")
-    device_source = models.CharField(
-        max_length=50,
-        verbose_name="Source",
-        choices=SourceDevice.CHOICES,
-        default=SourceDevice.UNKNOWN,
-    )
 
     class Meta:
         db_table = "lte_wardriving"
