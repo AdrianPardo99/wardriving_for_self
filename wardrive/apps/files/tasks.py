@@ -28,6 +28,6 @@ def process_file(file_pk):
         total = new_added + updated + ignored
         file_obj.is_procesed = True
         file_obj.save()
-        return f"File {file_pk} processed successfully. Total of records in file {total}, Total new records {new_added}, Total updated found records {updated}, Total ignored {ignored}"
+        return f"File {file_pk} - {file_obj} processed successfully. Total of records in file {total}, Total new records {new_added}, Total updated found records {updated}, Total ignored {ignored}"
     except Exception as e:
         return f"Error while processing file {file_pk}: {str(e)}"

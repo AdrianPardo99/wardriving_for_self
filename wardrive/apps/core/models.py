@@ -39,6 +39,7 @@ class SoftDeleteManager(models.Manager):
 
 
 class WardriveBaseModel(models.Model):
+    # Base Model you can copy for another base model SoftDelete
     created_at = models.DateTimeField(
         auto_now_add=True,
         verbose_name=pgettext_lazy("Wardrive Base Model field", "created at"),
@@ -52,6 +53,7 @@ class WardriveBaseModel(models.Model):
         blank=True,
         verbose_name=pgettext_lazy("Wardrive Base Model field", "deleted at"),
     )
+    # Fields for conquest wardriving
     first_seen = models.DateTimeField(verbose_name="First Seen", default=now)
     uploaded_by = models.TextField(verbose_name="Uploaded by", default="")
     device_source = models.CharField(

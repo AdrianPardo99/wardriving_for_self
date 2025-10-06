@@ -20,6 +20,9 @@ class FilesUploaded(models.Model):
         verbose_name = "File Upload"
         verbose_name_plural = "Files Upload"
 
+    def __str__(self):
+        return f"{self.source}"
+
 
 class AllowToLoadData(models.Model):
     active = models.BooleanField(default=True)
