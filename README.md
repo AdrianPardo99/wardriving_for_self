@@ -159,6 +159,7 @@ And with that you disable the processing of the files and nobody can get more SS
 
 I have to thank to some people and groups that make me develop this application
 
+* [Bets0b3ts4](https://www.instagram.com/melanibetsabee/) for travel and learn with me in Ekoparty about Wardriving activity and support me
 * [Tyr/@Infrn0](https://www.instagram.com/r3pt1li0) for provide some sources and help me to understand another technologies for the conquest/wardrive
 * [Ekoparty (Ekogroup Mx)](https://www.instagram.com/ekogroup_mx/)
 * [misskernel](https://www.instagram.com/misskernel/)
@@ -172,3 +173,7 @@ I have to thank to some people and groups that make me develop this application
 * Fix Swagger output for access to that endpoint
 * Add support to all wardriving sources from Minino
 * Add more mechanism for the conquest
+
+## Want to contribute 
+
+If you want to support your own wardriving technologies and files you can contact me using LinkedIn or my email on my profile, keep learn and happy hacking pal.
