@@ -161,6 +161,7 @@ I have to thank to some people and groups that make me develop this application
 
 * [Bets0b3ts4](https://www.instagram.com/melanibetsabee/) for travel and learn with me in Ekoparty about Wardriving activity and support me
 * [Tyr/@Infrn0](https://www.instagram.com/r3pt1li0) for provide some sources and help me to understand another technologies for the conquest/wardrive
+* [Electronic Cats](https://www.instagram.com/electroniccats/) for the project Minino related to wardriving with WiFi and IoT
 * [Ekoparty (Ekogroup Mx)](https://www.instagram.com/ekogroup_mx/)
 * [misskernel](https://www.instagram.com/misskernel/)
 * [samo_harakiri_2600/@Dr0xharakiri](https://github.com/Dr0xharakiri) 
