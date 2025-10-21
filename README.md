@@ -160,7 +160,7 @@ And with that you disable the processing of the files and nobody can get more SS
 I have to thank to some people and groups that make me develop this application
 
 * [Tyr/@Infrn0](https://www.instagram.com/r3pt1li0) for provide some sources and help me to understand another technologies for the conquest/wardrive
-* [Harumy/backdoorbabyyy_](backdoorbabyyy_) for give me feedback and support me when I'm not believing in the app and make her own hardware for practice wardriving  
+* [Harumy/backdoorbabyyy_](backdoorbabyyy_) for give me feedback and support me when I'm not believing in the app and make herself hardware for practice wardriving  
 * [Electronic Cats](https://www.instagram.com/electroniccats/) for the project Minino related to wardriving with WiFi and IoT
 * [Ekoparty (Ekogroup Mx)](https://www.instagram.com/ekogroup_mx/)
 * [misskernel](https://www.instagram.com/misskernel/)
