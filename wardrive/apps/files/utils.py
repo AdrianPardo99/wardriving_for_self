@@ -17,7 +17,7 @@ redis_client = Redis.from_url(settings.REDIS_URL)
 
 # Decorator for handle the parallel update/create record
 @contextmanager
-def record_lock(mac, channel, uploaded_by, timeout=10, wait=5, **kwargs):
+def record_lock(mac, channel, uploaded_by, timeout=10, wait=60, **kwargs):
     key = get_lock_key(mac, channel, uploaded_by)
     lock = redis_client.lock(key, timeout=timeout, blocking_timeout=wait)
     try:
@@ -28,7 +28,7 @@ def record_lock(mac, channel, uploaded_by, timeout=10, wait=5, **kwargs):
 
 
 @contextmanager
-def record_lte_lock(mcc, mnc, lac, cell_id, timeout=10, wait=5, **kwargs):
+def record_lte_lock(mcc, mnc, lac, cell_id, timeout=10, wait=60, **kwargs):
     key = get_lock_lte_key(mcc, mnc, lac, cell_id)
     lock = redis_client.lock(key, timeout=timeout, blocking_timeout=wait)
     try:
@@ -94,58 +94,64 @@ def process_format_flipper_marauder(
                     pass
             if isinstance(first_seen, str):
                 first_seen = None
-            channel = int(channel) if channel.isdigit() else None
-            rssi = int(rssi)
-            lat = Decimal(lat) if lat else None
-            lon = Decimal(lon) if lon else None
-            alt = Decimal(alt) if alt else None
-            acc = Decimal(acc) if acc else None
-            # Create or update a record
-            with record_lock(mac, channel, uploaded_by):
-                created = True
-                try:
-                    obj = Wardriving.objects.get(
-                        mac=mac,
-                        channel=channel,
-                        uploaded_by=uploaded_by,
-                    )
-                    created = False
-                except Wardriving.DoesNotExist:
-                    obj = Wardriving(
-                        mac=mac,
-                        channel=channel,
-                        uploaded_by=uploaded_by,
-                    )
-                data = {
-                    "ssid": ssid,
-                    "auth_mode": auth_mode,
-                    "first_seen": first_seen,
-                    "current_latitude": lat,
-                    "current_longitude": lon,
-                    "altitude_meters": alt,
-                    "accuracy_meters": acc,
-                    "type": data_type,
-                    "rssi": rssi,
-                    "device_source": device_source,
-                }
-                # Clean empty fields
-                data = {k: v for k, v in data.items() if v is not None}
-                save = False
-                if created:
-                    for field, value in data.items():
-                        setattr(obj, field, value)
-                else:
-                    if obj.rssi < rssi or obj.is_default_data():
+            try:
+                channel = int(channel) if channel.isdigit() else None
+                rssi = int(rssi)
+                lat = Decimal(lat) if lat else None
+                lon = Decimal(lon) if lon else None
+                alt = Decimal(alt) if alt else None
+                acc = Decimal(acc) if acc else None
+                if lat == 0.0 and lon == 0.0:
+                    continue
+                # Create or update a record
+                with record_lock(mac, channel, uploaded_by):
+                    created = True
+                    try:
+                        obj = Wardriving.objects.get(
+                            mac=mac,
+                            channel=channel,
+                            uploaded_by=uploaded_by,
+                        )
+                        created = False
+                    except Wardriving.DoesNotExist:
+                        obj = Wardriving(
+                            mac=mac,
+                            channel=channel,
+                            uploaded_by=uploaded_by,
+                        )
+                    data = {
+                        "ssid": ssid,
+                        "auth_mode": auth_mode,
+                        "first_seen": first_seen,
+                        "current_latitude": lat,
+                        "current_longitude": lon,
+                        "altitude_meters": alt,
+                        "accuracy_meters": acc,
+                        "type": data_type,
+                        "rssi": rssi,
+                        "device_source": device_source,
+                    }
+                    # Clean empty fields
+                    data = {k: v for k, v in data.items() if v is not None}
+                    save = False
+                    if created:
                         for field, value in data.items():
                             setattr(obj, field, value)
-                if not obj.is_default_data():
-                    save = True
-                    total_new += 1 if created else 0
-                    total_old += 1 if not created else 0
+                    else:
+                        if obj.rssi < rssi or obj.is_default_data():
+                            for field, value in data.items():
+                                setattr(obj, field, value)
+                    if not obj.is_default_data():
+                        save = True
+                        total_new += 1 if created else 0
+                        total_old += 1 if not created else 0
 
-                if save:
-                    obj.save()
-                    continue
+                    if save:
+                        obj.save()
+                        continue
+                    total_ignored += 1
+            except Exception as e:
+                print(f"Ignore this line: {line}")
                 total_ignored += 1
 
     return total_new, total_old, total_ignored
@@ -213,6 +219,9 @@ def process_format_classic_marauder(
             lon = Decimal(lon) if lon else None
             alt = Decimal(alt) if alt else None
             acc = Decimal(acc) if acc else None
+            if lat == 0.0 and lon == 0.0:
+                total_ignored += 1
+                continue
             # Create or update a record
             with record_lock(mac, channel, uploaded_by):
                 created = True
