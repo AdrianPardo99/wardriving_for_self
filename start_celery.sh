@@ -4,6 +4,8 @@ set -o errexit
 set -o pipefail
 set -o nounset
 
-echo "Start Celery Service"
+QUEUE=${QUEUE:-proc_0}
+echo "Start Celery Service ${QUEUE}"
 cd /code/wardrive 
-watchmedo auto-restart --directory=./ --pattern=*.py --recursive -- celery -A wardrive worker --loglevel=info
+watchmedo auto-restart --directory=./ --pattern=*.py --recursive -- \
+    celery -A wardrive worker -Q "$QUEUE" -n "w.${QUEUE}@%h" -c 1 -O fair --prefetch-multiplier=1 --loglevel=info

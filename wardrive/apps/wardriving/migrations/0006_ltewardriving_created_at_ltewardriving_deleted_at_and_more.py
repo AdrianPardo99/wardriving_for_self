@@ -5,47 +5,60 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
-        ('wardriving', '0005_ltewardriving_tech'),
+        ("wardriving", "0005_ltewardriving_tech"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='ltewardriving',
-            name='created_at',
-            field=models.DateTimeField(auto_now_add=True, default=django.utils.timezone.now, verbose_name='created at'),
+            model_name="ltewardriving",
+            name="created_at",
+            field=models.DateTimeField(
+                auto_now_add=True,
+                default=django.utils.timezone.now,
+                verbose_name="created at",
+            ),
             preserve_default=False,
         ),
         migrations.AddField(
-            model_name='ltewardriving',
-            name='deleted_at',
-            field=models.DateTimeField(blank=True, null=True, verbose_name='deleted at'),
+            model_name="ltewardriving",
+            name="deleted_at",
+            field=models.DateTimeField(
+                blank=True, null=True, verbose_name="deleted at"
+            ),
         ),
         migrations.AddField(
-            model_name='ltewardriving',
-            name='updated_at',
-            field=models.DateTimeField(auto_now=True, verbose_name='updated at'),
+            model_name="ltewardriving",
+            name="updated_at",
+            field=models.DateTimeField(auto_now=True, verbose_name="updated at"),
         ),
         migrations.AddField(
-            model_name='wardriving',
-            name='created_at',
-            field=models.DateTimeField(auto_now_add=True, default=django.utils.timezone.now, verbose_name='created at'),
+            model_name="wardriving",
+            name="created_at",
+            field=models.DateTimeField(
+                auto_now_add=True,
+                default=django.utils.timezone.now,
+                verbose_name="created at",
+            ),
             preserve_default=False,
         ),
         migrations.AddField(
-            model_name='wardriving',
-            name='deleted_at',
-            field=models.DateTimeField(blank=True, null=True, verbose_name='deleted at'),
+            model_name="wardriving",
+            name="deleted_at",
+            field=models.DateTimeField(
+                blank=True, null=True, verbose_name="deleted at"
+            ),
         ),
         migrations.AddField(
-            model_name='wardriving',
-            name='updated_at',
-            field=models.DateTimeField(auto_now=True, verbose_name='updated at'),
+            model_name="wardriving",
+            name="updated_at",
+            field=models.DateTimeField(auto_now=True, verbose_name="updated at"),
         ),
         migrations.AlterField(
-            model_name='wardriving',
-            name='mac',
-            field=models.CharField(default='AA:BB:CC:DD:EE:FF', max_length=17, verbose_name='MAC Address'),
+            model_name="wardriving",
+            name="mac",
+            field=models.CharField(
+                default="AA:BB:CC:DD:EE:FF", max_length=17, verbose_name="MAC Address"
+            ),
         ),
     ]

@@ -1,6 +1,8 @@
 from django.db import models
 from django.utils.timezone import now
 
+from decimal import Decimal, InvalidOperation
+
 from . import SourceDevice
 from apps.core.models import WardriveBaseModel
 
@@ -42,7 +44,21 @@ class Wardriving(WardriveBaseModel):
         return f"{device} ({self.mac})"
 
     def is_default_data(self):
-        return self.current_latitude == 0 and self.current_longitude == 0
+        # Check current_latitude / current_longitude
+        lat = getattr(self, "current_latitude", None)
+        lon = getattr(self, "current_longitude", None)
+
+        def is_zero_or_none(x):
+            if x is None:
+                return True
+            try:
+                return Decimal(x) == 0
+            except (InvalidOperation, TypeError):
+                # Si viene string raro, NaN, etc. trátalo como default
+                return True
+
+        # Default si no tenemos coordenadas reales
+        return is_zero_or_none(lat) and is_zero_or_none(lon)
 
 
 class LTEWardriving(WardriveBaseModel):
@@ -62,7 +78,7 @@ class LTEWardriving(WardriveBaseModel):
     current_latitude = models.DecimalField(
         max_digits=9, decimal_places=6, verbose_name="Latitude", default=0
     )
-    current_longitud = models.DecimalField(
+    current_longitude = models.DecimalField(
         max_digits=9, decimal_places=6, verbose_name="Longitude", default=0
     )
     tech = models.TextField(verbose_name="Technology", default="LTE")
@@ -76,4 +92,18 @@ class LTEWardriving(WardriveBaseModel):
         return f"`{self.pk}`:{self.mcc}-{self.mnc}-{self.lac} : ({self.cell_id})"
 
     def is_default_data(self):
-        return self.current_latitude == 0 and self.current_longitude == 0
+        # Check current_latitude / current_longitude
+        lat = getattr(self, "current_latitude", None)
+        lon = getattr(self, "current_longitude", None)
+
+        def is_zero_or_none(x):
+            if x is None:
+                return True
+            try:
+                return Decimal(x) == 0
+            except (InvalidOperation, TypeError):
+                # Si viene string raro, NaN, etc. trátalo como default
+                return True
+
+        # Default si no tenemos coordenadas reales
+        return is_zero_or_none(lat) and is_zero_or_none(lon)

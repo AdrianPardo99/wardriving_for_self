@@ -3,6 +3,7 @@ import os
 import datetime
 from pathlib import Path
 from celery.schedules import crontab
+from kombu import Queue, Exchange
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -193,11 +194,48 @@ if REDIS_HOST and REDIS_PORT:
 
 # Celery Configuration
 CELERY_BROKER_URL = env("CELERY_BROKER_URL", default="redis://localhost:6379/0")
-CELERY_RESULT_BACKEND = env("CELERY_RESULT_BACKEND", default="redis://localhost:6379/0")
+CELERY_RESULT_BACKEND = env("CELERY_RESULT_BACKEND", default="redis://localhost:6379/1")
 CELERY_ACCEPT_CONTENT = ["application/json"]
 CELERY_TASK_SERIALIZER = "json"
 CELERY_RESULT_SERIALIZER = "json"
 CELERY_TIMEZONE = "America/Mexico_City"
+CELERY_ENABLE_UTC = False
+# --- Sharding por (uploaded_by, device_source) ---
+CELERY_SHARDS = int(os.getenv("CELERY_SHARDS", "4"))
+CELERY_TASK_DEFAULT_QUEUE = "proc_0"
+QUEUE_ARGS = {"x-max-priority": 10}
+
+CELERY_TASK_QUEUES = tuple(
+    Queue(
+        name=f"proc_{i}",
+        exchange=Exchange(f"proc_{i}"),
+        routing_key=f"proc_{i}",
+        **{"queue_arguments": QUEUE_ARGS},
+    )
+    for i in range(CELERY_SHARDS)
+)
+
+
+def _shard_for(uploaded_by_id, device_source, n=CELERY_SHARDS):
+    key = f"{uploaded_by_id}:{device_source}"
+    return f"proc_{(hash(key) % n)}"
+
+
+def route_by_pair(name, args, kwargs, options, task=None, **_):
+    if name.endswith("process_file"):
+        ub = kwargs.get("_uploaded_by_id")
+        ds = kwargs.get("_device_source")
+        if ub is not None and ds is not None:
+            q = _shard_for(ub, ds)
+            # prioridad ejemplo: fuentes críticas más alto (más cercano a 10)
+            prio = 8 if ds in {"wardriving_app"} else 5
+            return {"queue": q, "routing_key": q, "priority": prio}
+    return None
+
+
+CELERY_TASK_ROUTES = (route_by_pair,)
+CELERY_TASK_ACKS_LATE = True
+CELERY_TASK_REJECT_ON_WORKER_LOST = True
 
 APPEND_SLASH = False
 USE_X_FORWARDED_HOST = True

@@ -5,14 +5,22 @@ from .models import FilesUploaded, AllowToLoadData
 from .utils import CHOICES_FUNCTION_PROCESS
 
 
-@shared_task
-def process_file(file_pk):
+@shared_task(
+    bind=True,
+    acks_late=True,
+    autoretry_for=(Exception,),
+    retry_backoff=True,
+    retry_jitter=True,
+    max_retries=5,
+    reject_on_worker_lost=True,
+)
+def process_file(self, file_pk, _uploaded_by_id=None, _device_source=None):
     if not AllowToLoadData.objects.filter(active=True).exists():
         return "Data loading is currently disabled."
     try:
-        file_obj = FilesUploaded.objects.get(pk=file_pk)
-    except ObjectDoesNotExist:
-        return f"File with pk={file_pk} does not exist."
+        file_obj = FilesUploaded.objects.get(pk=file_pk, is_procesed=False)
+    except FilesUploaded.DoesNotExist:
+        return f"File with pk={file_pk} does not exist or is already processed."
     device_source = file_obj.device_source
     class_process_function = CHOICES_FUNCTION_PROCESS.get(device_source, None)
 

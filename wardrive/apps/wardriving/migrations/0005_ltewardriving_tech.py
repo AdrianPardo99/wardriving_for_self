@@ -4,15 +4,17 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
-        ('wardriving', '0004_ltewardriving_device_source_ltewardriving_first_seen_and_more'),
+        (
+            "wardriving",
+            "0004_ltewardriving_device_source_ltewardriving_first_seen_and_more",
+        ),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='ltewardriving',
-            name='tech',
-            field=models.TextField(default='LTE', verbose_name='Technology'),
+            model_name="ltewardriving",
+            name="tech",
+            field=models.TextField(default="LTE", verbose_name="Technology"),
         ),
     ]

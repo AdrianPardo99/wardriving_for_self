@@ -11,4 +11,5 @@ WHERE
 	AND {{author}}
 	AND {{first_seen}}
 	AND (current_latitude!=0 AND current_longitude!=0)
+	AND deleted_at is NULL
 GROUP BY uploaded_by

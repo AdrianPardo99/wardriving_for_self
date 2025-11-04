@@ -31,15 +31,36 @@ services:
     volumes:
       - redis_data:/data
     restart: on-failure
-
-  celery:
+  rabbitmq:
+    image: rabbitmq:3.13-management
+    ports:
+      - "15672:15672" # UI
+    restart: on-failure
+  celery_proc_0:
     build: .
     command: /code/start_celery.sh
+    environment:
+      - QUEUE=proc_0
     volumes:
       - .:/code
     depends_on:
       - wardrive
       - redis
+      - rabbitmq
+    env_file: .env
+    restart: on-failure
+
+  celery_proc_1:
+    build: .
+    command: /code/start_celery.sh
+    environment:
+      - QUEUE=proc_1
+    volumes:
+      - .:/code
+    depends_on:
+      - wardrive
+      - redis
+      - rabbitmq
     env_file: .env
     restart: on-failure
 
