@@ -63,7 +63,162 @@ services:
       - rabbitmq
     env_file: .env
     restart: on-failure
-
+  celery_proc_2:
+    build: .
+    command: /code/start_celery.sh
+    environment:
+      - QUEUE=proc_2
+    volumes:
+      - .:/code
+    depends_on:
+      - wardrive
+      - redis
+      - rabbitmq
+    env_file: .env
+    restart: on-failure
+  celery_proc_3:
+    build: .
+    command: /code/start_celery.sh
+    environment:
+      - QUEUE=proc_3
+    volumes:
+      - .:/code
+    depends_on:
+      - wardrive
+      - redis
+      - rabbitmq
+    env_file: .env
+    restart: on-failure
+  celery_proc_4:
+    build: .
+    command: /code/start_celery.sh
+    environment:
+      - QUEUE=proc_4
+    volumes:
+      - .:/code
+    depends_on:
+      - wardrive
+      - redis
+      - rabbitmq
+    env_file: .env
+    restart: on-failure
+  celery_proc_5:
+    build: .
+    command: /code/start_celery.sh
+    environment:
+      - QUEUE=proc_5
+    volumes:
+      - .:/code
+    depends_on:
+      - wardrive
+      - redis
+      - rabbitmq
+    env_file: .env
+    restart: on-failure
+  celery_proc_6:
+    build: .
+    command: /code/start_celery.sh
+    environment:
+      - QUEUE=proc_6
+    volumes:
+      - .:/code
+    depends_on:
+      - wardrive
+      - redis
+      - rabbitmq
+    env_file: .env
+    restart: on-failure
+  celery_proc_7:
+    build: .
+    command: /code/start_celery.sh
+    environment:
+      - QUEUE=proc_7
+    volumes:
+      - .:/code
+    depends_on:
+      - wardrive
+      - redis
+      - rabbitmq
+    env_file: .env
+    restart: on-failure
+  celery_proc_8:
+    build: .
+    command: /code/start_celery.sh
+    environment:
+      - QUEUE=proc_8
+    volumes:
+      - .:/code
+    depends_on:
+      - wardrive
+      - redis
+      - rabbitmq
+    env_file: .env
+    restart: on-failure
+  celery_proc_9:
+    build: .
+    command: /code/start_celery.sh
+    environment:
+      - QUEUE=proc_9
+    volumes:
+      - .:/code
+    depends_on:
+      - wardrive
+      - redis
+      - rabbitmq
+    env_file: .env
+    restart: on-failure
+  celery_proc_10:
+    build: .
+    command: /code/start_celery.sh
+    environment:
+      - QUEUE=proc_10
+    volumes:
+      - .:/code
+    depends_on:
+      - wardrive
+      - redis
+      - rabbitmq
+    env_file: .env
+    restart: on-failure
+  celery_proc_11:
+    build: .
+    command: /code/start_celery.sh
+    environment:
+      - QUEUE=proc_11
+    volumes:
+      - .:/code
+    depends_on:
+      - wardrive
+      - redis
+      - rabbitmq
+    env_file: .env
+    restart: on-failure
+  celery_proc_12:
+    build: .
+    command: /code/start_celery.sh
+    environment:
+      - QUEUE=proc_12
+    volumes:
+      - .:/code
+    depends_on:
+      - wardrive
+      - redis
+      - rabbitmq
+    env_file: .env
+    restart: on-failure
+  celery_proc_13:
+    build: .
+    command: /code/start_celery.sh
+    environment:
+      - QUEUE=proc_13
+    volumes:
+      - .:/code
+    depends_on:
+      - wardrive
+      - redis
+      - rabbitmq
+    env_file: .env
+    restart: on-failure
   celery-beat:
     build: .
     command: /code/start_celery_beat.sh
