@@ -124,7 +124,7 @@ And you can upload your logs using DRF API
 The expected body is:
 
 ```
-$BASE_URL/api/v1/files-uploaded/
+$BASE_URL/wardriving/api/v1/files-uploaded/
 ```
 
 ```json
