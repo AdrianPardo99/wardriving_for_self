@@ -742,5 +742,6 @@ CHOICES_FUNCTION_PROCESS = {
     SourceDevice.MARAUDER_ESP32: process_file_marauder_esp32,
     SourceDevice.RF_CUSTOM_FIRMWARE_WIFI: process_file_rf,
     SourceDevice.RF_CUSTOM_FIRMWARE_LTE: process_file_rf,
+    SourceDevice.KISMET:process_file_marauder_esp32,
     SourceDevice.OTHER: None,
 }
