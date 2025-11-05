@@ -7,6 +7,7 @@
             <option value="">-- Selecciona una opción --</option>
             <option value="flipper dev board">Flipper Dev Board</option>
             <option value="flipper dev board pro">Flipper Dev Board Pro</option>
+            <option value="kismet">Kismet</option>
             <option value="minino">Minino</option>
             <option value="marauder v4">Marauder V4</option>
             <option value="marauder v6">Marauder V6</option>
@@ -64,7 +65,7 @@
         });
 
         // Si clavas info desde otro lado te vamos a descalificar avisado quedas, hay registro de todo en todos lados
-        const url = "http://localhost:8000/wardriving/api/v1/files-uploaded/";
+        const url = "/wardriving/api/v1/files-uploaded/";
         try {
             const resp = await fetch(url, {
                 method: "POST",
