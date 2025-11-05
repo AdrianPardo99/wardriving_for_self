@@ -12,6 +12,7 @@ SELECT
 FROM wardriving
 WHERE
 	{{ssid}}
+	AND {{bssid}}
 	AND {{device_source}}
 	AND {{author}}
 	AND {{first_seen}}
