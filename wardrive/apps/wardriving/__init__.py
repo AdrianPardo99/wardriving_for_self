@@ -9,6 +9,7 @@ class SourceDevice:
     MARAUDER_ESP32 = "marauder esp32"
     RF_CUSTOM_FIRMWARE_WIFI = "rf custom firmware wifi"
     RF_CUSTOM_FIRMWARE_LTE = "rf custom firmware lte"
+    KISMET = "kismet"
     OTHER = "other"
 
     CHOICES = [
@@ -22,5 +23,6 @@ class SourceDevice:
         (MARAUDER_ESP32, MARAUDER_ESP32),
         (RF_CUSTOM_FIRMWARE_WIFI, RF_CUSTOM_FIRMWARE_WIFI),
         (RF_CUSTOM_FIRMWARE_LTE, RF_CUSTOM_FIRMWARE_LTE),
+        (KISMET,KISMET),
         (OTHER, OTHER),
     ]
