@@ -4,6 +4,7 @@ volumes:
   metabase_data: {}
   static_volume:
   media_volume:
+  ctfd_logs:
 
 services:
   wardrive:
@@ -36,6 +37,15 @@ services:
     ports:
       - "15672:15672" # UI
     restart: on-failure
+
+  ctfd_platform:
+    image: ctfd/ctfd:3.8.0
+    volumes:
+      - ctfd_logs:/opt/CTFd/logs
+    environment:
+      - REVERSE_PROXY=True
+      - APPLICATION_ROOT=/ctf
+
   celery_proc_0:
     build: .
     command: /code/start_celery.sh

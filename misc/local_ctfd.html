@@ -1,0 +1,170 @@
+<!-- Add in wardriving-api-upload -->
+<form id="ward-form" enctype="multipart/form-data">
+    <!-- Device Source -->
+    <div class="mb-3">
+        <label for="device_source" class="form-label">Device Source</label>
+        <select class="form-select" id="device_source" name="device_source" required>
+            <option value="">-- Selecciona una opción --</option>
+            <option value="flipper dev board">Flipper Dev Board</option>
+            <option value="flipper dev board pro">Flipper Dev Board Pro</option>
+            <option value="minino">Minino</option>
+            <option value="marauder v4">Marauder V4</option>
+            <option value="marauder v6">Marauder V6</option>
+            <option value="flipper bffb">Flipper BFFB</option>
+            <option value="marauder esp32">Marauder ESP32</option>
+            <option value="rf custom firmware wifi">RF Custom Firmware WiFi</option>
+            <option value="rf custom firmware lte">RF Custom Firmware LTE</option>
+        </select>
+    </div>
+    <!-- Multiple File Upload -->
+    <div class="mb-3">
+        <label for="files" class="form-label">Archivos a subir (hasta 100)</label>
+        <input
+            type="file"
+            class="form-control"
+            id="files"
+            name="files[]"
+            multiple
+            accept="*/*"
+            required
+        >
+        <div class="form-text">Puedes seleccionar varios archivos.</div>
+    </div>
+    <!-- Submit -->
+    <button type="submit" class="btn btn-primary">
+        Subir archivos
+    </button>
+</form>
+
+<script>
+    document.getElementById("ward-form").addEventListener("submit", async (e) => {
+        e.preventDefault();
+        const deviceSource = document.getElementById('device_source').value;
+        let files = Array.from(document.getElementById('files').files);
+        // Filtra vacíos y limita a 100
+        files = files.filter(f => f && f.size > 0);
+        if (files.length > 100) {
+            alert("Solo puedes enviar hasta 100 archivos válidos.");
+            return;
+        }
+        if (!deviceSource) {
+            alert("Selecciona un device_source");
+            return;
+        }
+        if (files.length === 0) {
+            alert("No hay archivos válidos para subir (todos estaban vacíos).");
+            return;
+        }
+
+        const formData = new FormData();
+        formData.append("device_source", deviceSource);
+        formData.append("uploaded_by", (window.init && window.init.userName) ? window.init.userName : "");
+        files.forEach((file) => {
+            formData.append("files", file);
+        });
+
+        // Si clavas info desde otro lado te vamos a descalificar avisado quedas, hay registro de todo en todos lados
+        const url = "http://localhost:8000/wardriving/api/v1/files-uploaded/";
+        try {
+            const resp = await fetch(url, {
+                method: "POST",
+                body: formData,
+            });
+            const text = await resp.text();
+            if (!resp.ok) {
+                console.error(text);
+                alert("Error subiendo archivos: " + resp.status);
+                return;
+            }
+
+            let json;
+            try {
+                json = JSON.parse(text);
+            } catch (e) {
+                console.error("Respuesta no JSON:", text);
+                alert("El servidor no devolvió JSON válido.");
+                return;
+            }
+
+            if (!Array.isArray(json)) {
+                console.error("Se esperaba un array:", json);
+                alert("Formato de respuesta inesperado del servidor.");
+                return;
+            }
+
+            const isProcessed = (item) =>
+                item?.is_procesed === true || item?.is_processed === true;
+
+            const anyProcessed = json.some(isProcessed);
+
+            if (anyProcessed) {
+                alert("Archivos subidos.\nNo subas archivos repetidos que ya fueron procesados o que se encuentran en procesamiento por favor o será motivo de descalificación.");
+                setTimeout(() => {
+                    window.location.reload();
+                }, 300);
+            return;
+            }
+
+            alert("Archivos subidos.");
+            setTimeout(() => {
+                window.location.reload();
+            }, 300);
+
+        } catch (err) {
+            console.error(err);
+            alert("Error de conexión: " + err.message);
+        }
+    });
+    // ------------------ Helpers ------------------
+    function parseISOorNull(v) {
+        if (!v) return null;
+        const d = new Date(String(v));
+        return isNaN(d.getTime()) ? null : d;
+    }
+
+    function fromUnixSecondsOrNull(s) {
+        if (!s && s !== 0) return null;
+        const d = new Date(Number(s) * 1000);
+        return isNaN(d.getTime()) ? null : d;
+    }
+
+    // Variables desde plantilla Jinja o fallback init
+    const startISO  = (typeof ctf_start !== "undefined" && ctf_start) ? String(ctf_start) : null;
+    const endISO    = (typeof ctf_end   !== "undefined" && ctf_end)   ? String(ctf_end)   : null;
+    const freezeISO = (typeof ctf_freeze !== "undefined" && ctf_freeze) ? String(ctf_freeze) : null;
+
+    let eventStart  = parseISOorNull(startISO)  || fromUnixSecondsOrNull(window.init?.start);
+    let eventEnd    = parseISOorNull(endISO)    || fromUnixSecondsOrNull(window.init?.end);
+    let freezeTime  = parseISOorNull(freezeISO) || null;
+
+    // Normaliza freeze
+    if (freezeTime && eventStart && freezeTime < eventStart) freezeTime = null;
+    if (freezeTime && eventEnd && freezeTime > eventEnd)     freezeTime = eventEnd;
+
+    // Evalúa la ventana de tiempo
+    function canUploadNow() {
+        const now = new Date();
+
+        if (eventStart && now < eventStart) return false;
+        if (eventEnd && now > eventEnd)     return false;
+        if (freezeTime && now >= freezeTime) return false;
+
+        return true;
+    }
+
+    document.addEventListener("DOMContentLoaded", () => {
+        const form = document.getElementById("ward-form");
+        if (!form) return;
+        if (!canUploadNow()) {
+            form.style.display = "none";
+            const msg = document.createElement("div");
+            msg.textContent = "Subidas deshabilitadas fuera de la ventana del evento.";
+            msg.style.color = "#b02a37";
+            msg.style.fontWeight = "bold";
+            msg.style.marginTop = "12px";
+            form.parentNode.insertBefore(msg, form);
+        } else {
+            form.style.display = "";
+        }
+    });
+</script>
