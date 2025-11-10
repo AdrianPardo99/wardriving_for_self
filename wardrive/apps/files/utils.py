@@ -304,7 +304,7 @@ def process_format_classic_marauder(
             r"^([0-9A-Fa-f:]+),\s*"  # MAC
             r"([^,]*),\s*"  # SSID
             r"\[([^\]]*)\],\s*"  # auth_mode
-            r"(\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}),\s*"  # timestamp
+            r"(\d{4}-\d{1,2}-\d{1,2} \d{2}:\d{2}:\d{2}),\s*"  # timestamp
             r"(\d+),\s*"  # channel
             r"(-?\d+),\s*"  # rssi
             r"(-?\d+(?:\.\d+)?),\s*"  # lat
@@ -742,6 +742,6 @@ CHOICES_FUNCTION_PROCESS = {
     SourceDevice.MARAUDER_ESP32: process_file_marauder_esp32,
     SourceDevice.RF_CUSTOM_FIRMWARE_WIFI: process_file_rf,
     SourceDevice.RF_CUSTOM_FIRMWARE_LTE: process_file_rf,
-    SourceDevice.KISMET:process_file_marauder_esp32,
+    SourceDevice.KISMET: process_file_marauder_esp32,
     SourceDevice.OTHER: None,
 }
