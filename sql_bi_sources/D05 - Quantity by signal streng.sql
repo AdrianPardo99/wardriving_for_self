@@ -16,6 +16,7 @@ WHERE
 	AND {{device_source}}
 	AND {{author}}
 	AND {{first_seen}}
+	AND {{auth_mode}}
 	AND (current_latitude!=0 AND current_longitude!=0)
 	AND deleted_at is NULL
 GROUP BY signal_streng
