@@ -9,7 +9,7 @@ and compete using wireless data gathered from various supported devices.
 # ⚖️📜 Disclaimer / Legal Notice
 
 This project was created **exclusively for educational purposes** and as
-part of an **academic contest**.\
+part of an **academic contest**.
 Its goal is to teach controlled wireless data collection and analysis
 while promoting ethical learning and healthy competition.
 
@@ -17,9 +17,9 @@ while promoting ethical learning and healthy competition.
 
 -   Using this application **outside an educational or contest
     environment** may violate local, national, or international laws
-    related to privacy, cybersecurity, and telecommunications.\
+    related to privacy, cybersecurity, and telecommunications.
 -   The creators are **not responsible** for misuse, damages, or any
-    illegal activities performed with this software.\
+    illegal activities performed with this software.
 -   The objective is to provide a **controlled, ethical, and
     supervised** environment for practice and learning.
 
@@ -45,11 +45,11 @@ Quick overview of the technologies used:
 
 Compatible firmwares supported by this application:
 
--   **WiFi:** RF Village MX, Marauder ESP32, Minino\
--   **BLE:** Marauder ESP32\
+-   **WiFi:** RF Village MX, Marauder ESP32, Minino
+-   **BLE:** Marauder ESP32
 -   **LTE:** RF Village MX
 
-> 💡 *Want to request support for an additional technology?*\
+> 💡 *Want to request support for an additional technology?*
 > Open an Issue and include the header format so it can be added in a
 > future release.
 
@@ -63,7 +63,7 @@ Supported formats are documented in:
 
 You may also upload logs following:
 
--   Wigle WiFi format\
+-   Wigle WiFi format
 -   Minino device outputs
 
 Both are directly compatible with the processing system.
@@ -72,16 +72,16 @@ Both are directly compatible with the processing system.
 
 ## 📟 Supported Hardware
 
--   🐾 **Minino:** `minino`\
+-   🐾 **Minino:** `minino`
     https://github.com/ElectronicCats/Minino
 
--   🐉 **ESP32 Marauder:**\
+-   🐉 **ESP32 Marauder:**
     Options: `flipper dev board`, `flipper dev board pro`,
-    `marauder v4`, `marauder v6`, `flipper bffb`, `marauder esp32`\
+    `marauder v4`, `marauder v6`, `flipper bffb`, `marauder esp32`
     https://github.com/justcallmekoko/ESP32Marauder
 
--   📶 **LILYGO T-SIM7000G-16MB (custom firmware)**\
-    Options: `rf custom firmware wifi`, `rf custom firmware lte`\
+-   📶 **LILYGO T-SIM7000G-16MB (custom firmware)**
+    Options: `rf custom firmware wifi`, `rf custom firmware lte`
     *(Firmware not provided --- happy hacking!)*
 
 ------------------------------------------------------------------------
@@ -172,7 +172,7 @@ Upload logs through DRF:
 
 # 📈 Metabase Setup
 
-There is no automatic setup yet.\
+There is no automatic setup yet.
 You must configure it manually:
 
 1.  Go to: `$BASE_METABASE_URL/admin/databases`
@@ -203,13 +203,13 @@ This prevents any new files from being processed.
 
 # 🙏 Special Thanks
 
--   [Tyr/@Infrn0](https://www.instagram.com/r3pt1li0)\
--   [Harumy/backdoorbabyyy\_](backdoorbabyyy_)\
--   [Electronic Cats](https://www.instagram.com/electroniccats/)\
--   [Ekoparty (Ekogroup Mx)](https://www.instagram.com/ekogroup_mx/)\
--   [misskernel](https://www.instagram.com/misskernel/)\
--   [Dr0xharakiri](https://github.com/Dr0xharakiri)\
--   [RF Village MX](https://www.instagram.com/rf_village_mx/)\
+-   [Tyr/@Infrn0](https://www.instagram.com/r3pt1li0)
+-   [Harumy/backdoorbabyyy\_](https://www.instagram.com/backdoorbabyyy_)
+-   [Electronic Cats](https://www.instagram.com/electroniccats/)
+-   [Ekoparty (Ekogroup Mx)](https://www.instagram.com/ekogroup_mx/)
+-   [misskernel](https://www.instagram.com/misskernel/)
+-   [Dr0xharakiri](https://github.com/Dr0xharakiri)
+-   [RF Village MX](https://www.instagram.com/rf_village_mx/)
 -   And the Mexican Cybersecurity Community 🖤
 
 ------------------------------------------------------------------------
