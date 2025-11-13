@@ -38,7 +38,7 @@ _*Note:*_ If you want to provide another technology please open an Issue and giv
 
 ## Formats
 
-For accept the process and save into the app you need to understand the current format of the hardware devices, for check is part you can read the formats in the next file `wardrive/apps/files/utils.py`
+For accept the process and save into the app you need to understand the current format of the hardware devices, for check is part you can read the formats in the next file `wardrive/apps/files/utils.py`, buy if you preffer to upload the information without check is you can simply check the Wiggle WiFi Format and Minino outputs for handling this part.
 
 ## Hardware
 
