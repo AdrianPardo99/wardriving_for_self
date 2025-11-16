@@ -39,13 +39,16 @@ services:
     restart: on-failure
 
   ctfd_platform:
-    image: ctfd/ctfd:3.8.0
+    build:
+      context: ./ctfd
+      dockerfile: Dockerfile
     volumes:
       - ctfd_logs:/opt/CTFd/logs
     environment:
       - REVERSE_PROXY=True
       - APPLICATION_ROOT=/ctf
       - PREFERRED_URL_SCHEME=https
+      - DATABASE_URL=postgresql://postgres:postgres@wardrive_db:5432/ctfd
 
   celery_proc_0:
     build: .
