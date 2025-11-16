@@ -45,6 +45,7 @@ services:
     environment:
       - REVERSE_PROXY=True
       - APPLICATION_ROOT=/ctf
+      - PREFERRED_URL_SCHEME=https
 
   celery_proc_0:
     build: .
