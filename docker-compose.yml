@@ -47,9 +47,10 @@ services:
     environment:
       - REVERSE_PROXY=True
       - APPLICATION_ROOT=/ctf
-      - PREFERRED_URL_SCHEME=https
       - DATABASE_URL=postgresql://postgres:postgres@wardrive_db:5432/ctfd
-
+    depends_on:
+      - wardrive_db
+    restart: on-failure
   celery_proc_0:
     build: .
     command: /code/start_celery.sh
