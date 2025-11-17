@@ -45,7 +45,7 @@ services:
     volumes:
       - ctfd_logs:/opt/CTFd/logs
     environment:
-      - REVERSE_PROXY=True
+      - REVERSE_PROXY=true
       - APPLICATION_ROOT=/ctf
       - DATABASE_URL=postgresql://postgres:postgres@wardrive_db:5432/ctfd
     depends_on:
