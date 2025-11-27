@@ -10,6 +10,7 @@ class SourceDevice:
     RF_CUSTOM_FIRMWARE_WIFI = "rf custom firmware wifi"
     RF_CUSTOM_FIRMWARE_LTE = "rf custom firmware lte"
     KISMET = "kismet"
+    WARDRIVER_UK="wardriver uk"
     OTHER = "other"
 
     CHOICES = [
@@ -24,5 +25,6 @@ class SourceDevice:
         (RF_CUSTOM_FIRMWARE_WIFI, RF_CUSTOM_FIRMWARE_WIFI),
         (RF_CUSTOM_FIRMWARE_LTE, RF_CUSTOM_FIRMWARE_LTE),
         (KISMET,KISMET),
+        (WARDRIVER_UK, WARDRIVER_UK),
         (OTHER, OTHER),
     ]
