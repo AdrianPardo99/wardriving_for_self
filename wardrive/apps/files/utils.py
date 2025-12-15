@@ -439,9 +439,9 @@ def process_file_minino(
     uploaded_by="Without Owner",
 ):
     try:
-        df = read_csv(file_path, encoding="utf-8", skiprows=1)
+        df = read_csv(file_path, encoding="utf-8", skiprows=1, on_bad_lines="skip")
     except UnicodeDecodeError:
-        df = read_csv(file_path, encoding="latin-1", skiprows=1)
+        df = read_csv(file_path, encoding="latin-1", skiprows=1, on_bad_lines="skip")
 
     deleted_rows = ["Frequency", "RCOIs", "MfgrId"]
     renamed_headers = {
