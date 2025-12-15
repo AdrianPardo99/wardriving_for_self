@@ -10,7 +10,7 @@ from redis import Redis
 
 from django.db import transaction
 from django.db.models import Q
-from django.utils.timezone import make_aware, now
+from django.utils.timezone import make_aware, now, is_naive
 from django.conf import settings
 
 from apps.wardriving.models import Wardriving, SourceDevice, LTEWardriving
@@ -475,10 +475,18 @@ def process_file_minino(
             continue
 
         first_seen = row.get("first_seen")
-        if isinstance(first_seen, datetime):
-            first_seen = make_aware(first_seen)
-        else:
+        if isna(first_seen):
             first_seen = None
+        # pandas Timestamp -> datetime
+        elif hasattr(first_seen, "to_pydatetime"):
+            first_seen = first_seen.to_pydatetime()
+            if is_naive(first_seen):
+                first_seen = make_aware(first_seen)
+
+        # datetime normal
+        elif isinstance(first_seen, datetime):
+            if is_naive(first_seen):
+                first_seen = make_aware(first_seen)
 
         rssi_val = int(row["rssi"]) if "rssi" in row and notna(row["rssi"]) else None
 
