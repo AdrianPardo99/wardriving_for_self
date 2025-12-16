@@ -37,8 +37,7 @@ class SoftDeleteManager(models.Manager):
     def hard_delete(self):
         return self.get_queryset().hard_delete()
 
-
-class WardriveBaseModel(models.Model):
+class BaseModel(models.Model):
     # Base Model you can copy for another base model SoftDelete
     created_at = models.DateTimeField(
         auto_now_add=True,
@@ -53,16 +52,6 @@ class WardriveBaseModel(models.Model):
         blank=True,
         verbose_name=pgettext_lazy("Wardrive Base Model field", "deleted at"),
     )
-    # Fields for conquest wardriving
-    first_seen = models.DateTimeField(verbose_name="First Seen", default=now)
-    uploaded_by = models.TextField(verbose_name="Uploaded by", default="")
-    device_source = models.CharField(
-        max_length=50,
-        verbose_name="Source",
-        choices=SourceDevice.CHOICES,
-        default=SourceDevice.UNKNOWN,
-    )
-
     objects = SoftDeleteManager()
     all_objects = SoftDeleteManager(alive_only=False)
 
@@ -90,3 +79,18 @@ class WardriveBaseModel(models.Model):
     def save(self, *args, **kwargs):
         self.clean()
         return super().save(*args, **kwargs)
+
+
+class WardriveBaseModel(BaseModel):
+    # Fields for conquest wardriving
+    first_seen = models.DateTimeField(verbose_name="First Seen", default=now)
+    uploaded_by = models.TextField(verbose_name="Uploaded by", default="")
+    device_source = models.CharField(
+        max_length=50,
+        verbose_name="Source",
+        choices=SourceDevice.CHOICES,
+        default=SourceDevice.UNKNOWN,
+    )
+
+    class Meta:
+        abstract = True
