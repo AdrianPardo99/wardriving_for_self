@@ -1,10 +1,9 @@
 class SourceVendor:
-    IEEE = 'ieee'
-    MIRROR = 'mirror'
-    MANUAL = 'manual'
+    IEEE = "ieee"
+    MIRROR = "mirror"
+    MANUAL = "manual"
     CHOICES = (
-        (IEEE,IEEE),
-        (MIRROR,MIRROR),
-        (MANUAL,MANUAL),
-
+        (IEEE, IEEE),
+        (MIRROR, MIRROR),
+        (MANUAL, MANUAL),
     )

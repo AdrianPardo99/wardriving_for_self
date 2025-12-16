@@ -4,36 +4,78 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     initial = True
 
-    dependencies = [
-    ]
+    dependencies = []
 
     operations = [
         migrations.CreateModel(
-            name='Vendors',
+            name="Vendors",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('created_at', models.DateTimeField(auto_now_add=True, verbose_name='created at')),
-                ('updated_at', models.DateTimeField(auto_now=True, verbose_name='updated at')),
-                ('deleted_at', models.DateTimeField(blank=True, null=True, verbose_name='deleted at')),
-                ('registry', models.CharField(db_index=True, max_length=8)),
-                ('assignment', models.CharField(db_index=True, max_length=12)),
-                ('prefix_bits', models.PositiveSmallIntegerField(db_index=True)),
-                ('organization_name', models.CharField(db_index=True, max_length=255)),
-                ('organization_address', models.TextField(blank=True, default='')),
-                ('normalized_prefix', models.CharField(db_index=True, max_length=12)),
-                ('source', models.CharField(choices=[('ieee', 'ieee'), ('mirror', 'mirror'), ('manual', 'manual')], max_length=64)),
-                ('source_url', models.URLField(blank=True, default='')),
-                ('ingested_at', models.DateTimeField(auto_now_add=True)),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                (
+                    "created_at",
+                    models.DateTimeField(auto_now_add=True, verbose_name="created at"),
+                ),
+                (
+                    "updated_at",
+                    models.DateTimeField(auto_now=True, verbose_name="updated at"),
+                ),
+                (
+                    "deleted_at",
+                    models.DateTimeField(
+                        blank=True, null=True, verbose_name="deleted at"
+                    ),
+                ),
+                ("registry", models.CharField(db_index=True, max_length=8)),
+                ("assignment", models.CharField(db_index=True, max_length=12)),
+                ("prefix_bits", models.PositiveSmallIntegerField(db_index=True)),
+                ("organization_name", models.CharField(db_index=True, max_length=255)),
+                ("organization_address", models.TextField(blank=True, default="")),
+                ("normalized_prefix", models.CharField(db_index=True, max_length=12)),
+                (
+                    "source",
+                    models.CharField(
+                        choices=[
+                            ("ieee", "ieee"),
+                            ("mirror", "mirror"),
+                            ("manual", "manual"),
+                        ],
+                        max_length=64,
+                    ),
+                ),
+                ("source_url", models.URLField(blank=True, default="")),
+                ("ingested_at", models.DateTimeField(auto_now_add=True)),
             ],
             options={
-                'verbose_name': 'Vendor',
-                'verbose_name_plural': 'Vendors',
-                'db_table': 'vendor',
-                'indexes': [models.Index(fields=['registry', 'prefix_bits', 'normalized_prefix'], name='vendor_registr_51ad37_idx')],
-                'constraints': [models.UniqueConstraint(fields=('registry', 'assignment', 'organization_name', 'organization_address'), name='uniq_registry_assignment_org_addr')],
+                "verbose_name": "Vendor",
+                "verbose_name_plural": "Vendors",
+                "db_table": "vendor",
+                "indexes": [
+                    models.Index(
+                        fields=["registry", "prefix_bits", "normalized_prefix"],
+                        name="vendor_registr_51ad37_idx",
+                    )
+                ],
+                "constraints": [
+                    models.UniqueConstraint(
+                        fields=(
+                            "registry",
+                            "assignment",
+                            "organization_name",
+                            "organization_address",
+                        ),
+                        name="uniq_registry_assignment_org_addr",
+                    )
+                ],
             },
         ),
     ]

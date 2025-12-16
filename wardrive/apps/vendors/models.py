@@ -6,6 +6,7 @@ from decimal import Decimal, InvalidOperation
 from . import SourceVendor
 from apps.core.models import BaseModel
 
+
 class Vendors(BaseModel):
     # Ej: "MA-L" (24-bit), "MA-M" (28-bit), "MA-S" (36-bit), "IAB", etc.
     registry = models.CharField(max_length=8, db_index=True)
@@ -28,7 +29,12 @@ class Vendors(BaseModel):
         ]
         constraints = [
             models.UniqueConstraint(
-                fields=["registry", "assignment", "organization_name", "organization_address"],
+                fields=[
+                    "registry",
+                    "assignment",
+                    "organization_name",
+                    "organization_address",
+                ],
                 name="uniq_registry_assignment_org_addr",
             )
         ]

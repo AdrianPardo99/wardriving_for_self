@@ -30,8 +30,8 @@ BLANK_RE = re.compile(r"^\s*$")
 
 @dataclass
 class ParsedOui:
-    registry: str          # "MA-L"
-    assignment: str        # "286FB9"
+    registry: str  # "MA-L"
+    assignment: str  # "286FB9"
     org_name: str
     org_address: str
 
@@ -114,7 +114,9 @@ def parse_oui_csv(content: str) -> Iterator[ParsedOui]:
     required = {"Registry", "Assignment", "Organization Name", "Organization Address"}
     missing = required - set(reader.fieldnames or [])
     if missing:
-        raise ValueError(f"CSV: faltan columnas: {sorted(missing)}; headers={reader.fieldnames}")
+        raise ValueError(
+            f"CSV: faltan columnas: {sorted(missing)}; headers={reader.fieldnames}"
+        )
 
     for row in reader:
         registry = (row.get("Registry") or "").strip()
@@ -147,7 +149,9 @@ def registry_to_prefix_bits(registry: str) -> int:
 
 
 class Command(BaseCommand):
-    help = "Importa IEEE OUI (MA-L) desde oui.txt (fallback a oui.csv) a la tabla Vendors."
+    help = (
+        "Importa IEEE OUI (MA-L) desde oui.txt (fallback a oui.csv) a la tabla Vendors."
+    )
 
     def add_arguments(self, parser):
         parser.add_argument(
@@ -224,7 +228,9 @@ class Command(BaseCommand):
         @transaction.atomic
         def flush_batch(batch: list[Vendors]) -> int:
             # ignore_conflicts=True evita reventar por UniqueConstraint
-            Vendors.objects.bulk_create(batch, ignore_conflicts=True, batch_size=len(batch))
+            Vendors.objects.bulk_create(
+                batch, ignore_conflicts=True, batch_size=len(batch)
+            )
             return len(batch)
 
         for item in parsed_iter:
@@ -245,7 +251,9 @@ class Command(BaseCommand):
 
             if len(buffer) >= batch_size:
                 created_total += flush_batch(buffer)
-                self.stdout.write(f"✅ batch insert: {created_total} (seen={seen_total})")
+                self.stdout.write(
+                    f"✅ batch insert: {created_total} (seen={seen_total})"
+                )
                 buffer = []
 
         if buffer:

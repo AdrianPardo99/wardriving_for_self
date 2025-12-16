@@ -37,6 +37,7 @@ class SoftDeleteManager(models.Manager):
     def hard_delete(self):
         return self.get_queryset().hard_delete()
 
+
 class BaseModel(models.Model):
     # Base Model you can copy for another base model SoftDelete
     created_at = models.DateTimeField(

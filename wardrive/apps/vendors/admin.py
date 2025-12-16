@@ -5,4 +5,3 @@ from .models import Vendors
 @admin.register(Vendors)
 class VendorsAdmin(admin.ModelAdmin):
     pass
-
