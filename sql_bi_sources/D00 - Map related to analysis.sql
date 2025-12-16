@@ -2,32 +2,37 @@
 -- Copy Paste the name of Bi table in your metabase implementation
 -- D00 - Map related to analysis
 SELECT
-	mac,
-	ssid,
-	auth_mode,
-	first_seen,
-	channel,
-	rssi,
+	wardriving.mac,	
+	--vendor.registry ,
+	vendor.organization_name as vendor,
+	vendor.source,
+	wardriving.ssid,
+	wardriving.auth_mode,
+	wardriving.first_seen,
+	wardriving.channel,
+	wardriving.rssi,
 	CASE
-    	WHEN rssi > -50 THEN 'Excellent'
-        WHEN rssi BETWEEN -60 AND -50 THEN 'Good'
-        WHEN rssi BETWEEN -70 AND -60 THEN 'Fair'
+    	WHEN wardriving.rssi > -50 THEN 'Excellent'
+        WHEN wardriving.rssi BETWEEN -60 AND -50 THEN 'Good'
+        WHEN wardriving.rssi BETWEEN -70 AND -60 THEN 'Fair'
         ELSE 'Weak'
 	END AS signal_streng,
-	device_source,
-	uploaded_by,
+	wardriving.device_source,
+	wardriving.uploaded_by,
 	wardriving.type,
-	current_latitude,
-	current_longitude,
-	altitude_meters,
-	accuracy_meters
+	wardriving.current_latitude,
+	wardriving.current_longitude,
+	wardriving.altitude_meters,
+	wardriving.accuracy_meters
 FROM wardriving
+LEFT JOIN vendor ON REGEXP_REPLACE(vendor.normalized_prefix,'(.{2})(.{2})(.{2})', '\1:\2:\3')=SUBSTRING(wardriving.mac,1,8)
 WHERE
 	{{ssid}}
-	AND {{bssid}}
 	AND {{device_source}}
 	AND {{author}}
 	AND {{first_seen}}
+	AND {{bssid}}
 	AND {{auth_mode}}
+	AND {{vendor}}
 	AND (current_latitude!=0 AND current_longitude!=0)
-	AND deleted_at is NULL
+	AND wardriving.deleted_at is NULL

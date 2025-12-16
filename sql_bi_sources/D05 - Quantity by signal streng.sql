@@ -10,13 +10,15 @@ SELECT
 	END AS signal_streng,
 	count(*) as qty_by_signal
 FROM wardriving
+LEFT JOIN vendor ON REGEXP_REPLACE(vendor.normalized_prefix,'(.{2})(.{2})(.{2})', '\1:\2:\3')=SUBSTRING(wardriving.mac,1,8)
 WHERE
 	{{ssid}}
-	AND {{bssid}}
 	AND {{device_source}}
 	AND {{author}}
 	AND {{first_seen}}
+	AND {{bssid}}
 	AND {{auth_mode}}
+	AND {{vendor}}
 	AND (current_latitude!=0 AND current_longitude!=0)
-	AND deleted_at is NULL
+	AND wardriving.deleted_at is NULL
 GROUP BY signal_streng

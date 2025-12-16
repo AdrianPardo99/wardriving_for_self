@@ -1,9 +1,9 @@
 -- Change Visual Mode to Cake graph
 -- Copy Paste the name of Bi table in your metabase implementation
--- D04 - Quantity by author
+-- D06 - Quantity by vendor
 SELECT
-	uploaded_by,
-	count(*) as qty_by_author
+	COALESCE(vendor.organization_name,'not provided or not found') as vendor,
+	count(*) as qty_by_signal
 FROM wardriving
 LEFT JOIN vendor ON REGEXP_REPLACE(vendor.normalized_prefix,'(.{2})(.{2})(.{2})', '\1:\2:\3')=SUBSTRING(wardriving.mac,1,8)
 WHERE
@@ -16,4 +16,4 @@ WHERE
 	AND {{vendor}}
 	AND (current_latitude!=0 AND current_longitude!=0)
 	AND wardriving.deleted_at is NULL
-GROUP BY uploaded_by
+GROUP BY vendor
