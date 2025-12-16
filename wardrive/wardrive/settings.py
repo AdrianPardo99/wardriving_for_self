@@ -34,6 +34,7 @@ INSTALLED_APPS = [
     # Local apps
     "apps.wardriving",
     "apps.files",
+    "apps.vendors",
 ]
 
 MIDDLEWARE = [
