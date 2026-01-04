@@ -107,3 +107,9 @@ class LTEWardriving(WardriveBaseModel):
 
         # Default si no tenemos coordenadas reales
         return is_zero_or_none(lat) and is_zero_or_none(lon)
+
+
+## Impor all Views here
+from .db_views import (
+    WardrivingVendorsView,
+)

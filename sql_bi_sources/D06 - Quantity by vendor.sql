@@ -2,10 +2,9 @@
 -- Copy Paste the name of Bi table in your metabase implementation
 -- D06 - Quantity by vendor
 SELECT
-	COALESCE(vendor.organization_name,'not provided or not found') as vendor,
+	vendor,
 	count(*) as qty_by_signal
-FROM wardriving
-LEFT JOIN vendor ON REGEXP_REPLACE(vendor.normalized_prefix,'(.{2})(.{2})(.{2})', '\1:\2:\3')=SUBSTRING(wardriving.mac,1,8)
+FROM wardriving_vendor
 WHERE
 	{{ssid}}
 	AND {{device_source}}
@@ -14,6 +13,4 @@ WHERE
 	AND {{bssid}}
 	AND {{auth_mode}}
 	AND {{vendor}}
-	AND (current_latitude!=0 AND current_longitude!=0)
-	AND wardriving.deleted_at is NULL
 GROUP BY vendor

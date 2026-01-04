@@ -31,6 +31,7 @@ INSTALLED_APPS = [
     "drf_yasg",
     "django_filters",
     "django_celery_beat",
+    "django_db_views",
     # Local apps
     "apps.wardriving",
     "apps.files",

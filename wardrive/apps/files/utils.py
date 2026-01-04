@@ -497,18 +497,26 @@ def process_file_minino(
             "ssid": (row.get("ssid") or None),
             "auth_mode": (row.get("auth_mode") or None),
             "first_seen": first_seen,
-            "current_latitude": Decimal(row["current_latitude"])
-            if notna(row.get("current_latitude"))
-            else None,
-            "current_longitude": Decimal(row["current_longitude"])
-            if notna(row.get("current_longitude"))
-            else None,
-            "altitude_meters": Decimal(row["altitude_meters"])
-            if notna(row.get("altitude_meters"))
-            else None,
-            "accuracy_meters": Decimal(row["accuracy_meters"])
-            if notna(row.get("accuracy_meters"))
-            else None,
+            "current_latitude": (
+                Decimal(row["current_latitude"])
+                if notna(row.get("current_latitude"))
+                else None
+            ),
+            "current_longitude": (
+                Decimal(row["current_longitude"])
+                if notna(row.get("current_longitude"))
+                else None
+            ),
+            "altitude_meters": (
+                Decimal(row["altitude_meters"])
+                if notna(row.get("altitude_meters"))
+                else None
+            ),
+            "accuracy_meters": (
+                Decimal(row["accuracy_meters"])
+                if notna(row.get("accuracy_meters"))
+                else None
+            ),
             "type": (row.get("type") or "WIFI"),
             "rssi": rssi_val,
             "device_source": device_source,
