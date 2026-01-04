@@ -5,6 +5,7 @@ volumes:
   static_volume:
   media_volume:
   ctfd_logs:
+  ctfd_uploads:
 
 services:
   wardrive:
@@ -44,6 +45,7 @@ services:
       dockerfile: Dockerfile
     volumes:
       - ctfd_logs:/opt/CTFd/logs
+      - ctfd_uploads:/opt/CTFd/uploads
     environment:
       - REVERSE_PROXY=true
       - APPLICATION_ROOT=/ctf
