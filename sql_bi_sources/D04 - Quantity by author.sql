@@ -4,8 +4,7 @@
 SELECT
 	uploaded_by,
 	count(*) as qty_by_author
-FROM wardriving
-LEFT JOIN vendor ON REGEXP_REPLACE(vendor.normalized_prefix,'(.{2})(.{2})(.{2})', '\1:\2:\3')=SUBSTRING(wardriving.mac,1,8)
+FROM wardriving_vendor
 WHERE
 	{{ssid}}
 	AND {{device_source}}
@@ -14,6 +13,4 @@ WHERE
 	AND {{bssid}}
 	AND {{auth_mode}}
 	AND {{vendor}}
-	AND (current_latitude!=0 AND current_longitude!=0)
-	AND wardriving.deleted_at is NULL
 GROUP BY uploaded_by
