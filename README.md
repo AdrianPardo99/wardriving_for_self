@@ -45,7 +45,7 @@ Quick overview of the technologies used:
 
 Compatible firmwares supported by this application:
 
--   **WiFi:** RF Village MX, Marauder ESP32, Minino
+-   **WiFi:** RF Village MX, Marauder ESP32, Minino, Wardriver UK
 -   **BLE:** Marauder ESP32
 -   **LTE:** RF Village MX
 
@@ -77,7 +77,7 @@ Both are directly compatible with the processing system.
 
 -   🐉 **ESP32 Marauder:**
     Options: `flipper dev board`, `flipper dev board pro`,
-    `marauder v4`, `marauder v6`, `flipper bffb`, `marauder esp32`
+    `marauder v4`, `marauder v6`, `flipper bffb`, `marauder esp32`, `wardriver uk`
     https://github.com/justcallmekoko/ESP32Marauder
 
 -   📶 **LILYGO T-SIM7000G-16MB (custom firmware)**
@@ -204,7 +204,7 @@ This prevents any new files from being processed.
 # 🙏 Special Thanks
 
 -   [Tyr/@Infrn0](https://www.instagram.com/r3pt1li0)
--   [Harumy/backdoorbabyyy\_](https://www.instagram.com/backdoorbabyyy_)
+-   [Harumy/backdoorbabyyy\_](https://github.com/babyyyBugs)
 -   [Electronic Cats](https://www.instagram.com/electroniccats/)
 -   [Ekoparty (Ekogroup Mx)](https://www.instagram.com/ekogroup_mx/)
 -   [misskernel](https://www.instagram.com/misskernel/)
