@@ -10,3 +10,4 @@ staticfiles/
 *.log
 *json
 *.pcap
+*.kml
