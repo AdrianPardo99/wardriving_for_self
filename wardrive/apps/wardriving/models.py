@@ -18,10 +18,10 @@ class Wardriving(WardriveBaseModel):
     channel = models.IntegerField(verbose_name="Channel")
     rssi = models.IntegerField(verbose_name="RSSI (Signal Strength)")
     current_latitude = models.DecimalField(
-        max_digits=9, decimal_places=6, verbose_name="Latitude", default=0
+        max_digits=13, decimal_places=7, verbose_name="Latitude", default=0
     )
     current_longitude = models.DecimalField(
-        max_digits=9, decimal_places=6, verbose_name="Longitude", default=0
+        max_digits=13, decimal_places=7, verbose_name="Longitude", default=0
     )
     altitude_meters = models.DecimalField(
         max_digits=10,
