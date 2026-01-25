@@ -619,6 +619,7 @@ def process_file_marauder_esp32(
     esp32_classess_process = {
         SourceDevice.FLIPPER_DEV_BOARD: process_format_flipper_marauder,
         SourceDevice.FLIPPER_DEV_BOARD_PRO: process_format_flipper_marauder,
+        SourceDevice.KIISU: process_format_flipper_marauder,
     }
     cls_process = esp32_classess_process.get(
         device_source, process_format_classic_marauder
@@ -962,5 +963,6 @@ CHOICES_FUNCTION_PROCESS = {
     SourceDevice.RF_CUSTOM_FIRMWARE_LTE: process_file_rf,
     SourceDevice.KISMET: process_file_marauder_esp32,
     SourceDevice.WARDRIVER_UK: process_file_marauder_esp32,
+    SourceDevice.KIISU: process_file_marauder_esp32,
     SourceDevice.OTHER: None,
 }
