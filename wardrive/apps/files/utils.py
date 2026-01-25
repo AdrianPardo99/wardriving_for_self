@@ -179,37 +179,185 @@ def bulk_upsert_by_keys(
 
 
 # -----------------------------
-# Procesadores ESP32 Marauder (Flipper/Classic)
+# ESP32 Marauder parsers (Flipper/Classic)
 # -----------------------------
-LINE_RE_FLIPPER = re.compile(
-    r"\d+ \| ([\dA-Fa-f:]+),(.*?),\[(.*?)\],(.*?),(.*?),(-?\d+),(.*?),(.*?),(.*?),(.*?),(WIFI|BLE)$"
+
+LINE_RE_FLIPPER_WIFI = re.compile(
+    r"^(?:>?\s*)?\d+\s*\|\s*"  # "1 |" with optional leading ">"
+    r"([0-9A-Fa-f:]+),\s*"  # MAC/BSSID
+    r"([^,]*),\s*"  # SSID
+    r"\[([^\]]*)\],\s*"  # auth_mode
+    r"(\d{4}-\d{1,2}-\d{1,2} \d{2}:\d{2}:\d{2}),\s*"  # timestamp
+    r"(\d+),\s*"  # channel
+    r"(-?\d+),\s*"  # rssi
+    r"(-?\d+(?:\.\d+)?),\s*"  # lat
+    r"(-?\d+(?:\.\d+)?),\s*"  # lon
+    r"(-?\d+(?:\.\d+)?),\s*"  # alt
+    r"(-?\d+(?:\.\d+)?),\s*"  # acc
+    r"(WIFI)$"  # Technology
+)
+# New support in > 1.9.1_version hell yeah!!!
+LINE_RE_FLIPPER_BLE = re.compile(
+    r"^(?:>?\s*)?(?:Device:\s*)?"  # optional prefixes: ">" and/or "Device:"
+    r"(?:(.*?)(?=(?:[0-9A-Fa-f]{2}:){5}[0-9A-Fa-f]{2}))?"  # device_name (optional) right before MAC
+    r"((?:[0-9A-Fa-f]{2}:){5}[0-9A-Fa-f]{2})"  # MAC
+    r"(?:(?:[0-9A-Fa-f]{2}:){5}[0-9A-Fa-f]{2})?"  # duplicated MAC glued back-to-back (optional)
+    r",\s*"
+    r"([^,]*),\s*"  # extra field (often empty in your sample)
+    r"\[([^\]]*)\],\s*"  # auth_mode (e.g., BLE)
+    r"(\d{4}-\d{1,2}-\d{1,2} \d{2}:\d{2}:\d{2}),\s*"  # timestamp
+    r"(\d+),\s*"  # channel (usually 0 for BLE)
+    r"(-?\d+),\s*"  # rssi
+    r"(-?\d+(?:\.\d+)?),\s*"  # lat
+    r"(-?\d+(?:\.\d+)?),\s*"  # lon
+    r"(-?\d+(?:\.\d+)?),\s*"  # alt
+    r"(-?\d+(?:\.\d+)?),\s*"  # acc
+    r"(BLE)$"  # Technology
+)
+
+# -----------------------------
+# Helpers
+# -----------------------------
+
+_SKIP_CONTAINS = (
+    "stopscan",
+    "Starting Wardrive",
+    "Starting Continuous BT Wardrive",
+    "Started BLE Scan",
+    "wifi:can not get wifi protocol",
 )
 
 
-def _parse_marauder_line(line):
-    if line.startswith("#") or "stopscan" in line or "Starting Wardrive" in line:
+def _should_skip_marauder_line(line: str) -> bool:
+    """Return True if the line is metadata/noise and should not be parsed."""
+    if not line:
+        return True
+    s = line.strip()
+    if not s or s.startswith("#"):
+        return True
+    return any(x in s for x in _SKIP_CONTAINS)
+
+
+def _parse_dt_aware(s: str):
+    """Parse 'YYYY-MM-DD HH:MM:SS' into a timezone-aware datetime; return None on failure."""
+    if not s:
         return None
-    m = LINE_RE_FLIPPER.match(line.strip())
+    try:
+        return make_aware(datetime.strptime(s.strip(), "%Y-%m-%d %H:%M:%S"))
+    except Exception:
+        return None
+
+
+def _to_int(s: str):
+    """Convert string to int; return None when empty/invalid."""
+    if s is None:
+        return None
+    s = str(s).strip()
+    if s == "":
+        return None
+    try:
+        return int(s)
+    except Exception:
+        return None
+
+
+def _to_dec(s: str):
+    """Convert string to Decimal; return None when empty/invalid."""
+    if s is None:
+        return None
+    s = str(s).strip()
+    if s == "":
+        return None
+    try:
+        return Decimal(s)
+    except Exception:
+        return None
+
+
+# -----------------------------
+# Parsers (always return the same 11-field tuple)
+# (mac, ssid_or_name, auth_mode, first_seen, channel, rssi, lat, lon, alt, acc, data_type)
+# -----------------------------
+
+
+def _parse_marauder_wifi_line(line: str):
+    """Parse a Marauder WiFi line; return tuple or None."""
+    if _should_skip_marauder_line(line):
+        return None
+    m = LINE_RE_FLIPPER_WIFI.match(line.strip())
     if not m:
         return None
     return m.groups()
 
 
-# Process some files with structure from project Marauder ESP32 in flipper format (has an index for follow the wardrive)
-# Source to project firmware: https://github.com/justcallmekoko/ESP32Marauder/
-def process_format_flipper_marauder(
-    lines=list(),
-    device_source=SourceDevice.FLIPPER_DEV_BOARD,
-    uploaded_by="Without Owner",
+def _parse_marauder_ble_line(line: str):
+    """Parse a Marauder BLE line; return normalized tuple or None."""
+    if _should_skip_marauder_line(line):
+        return None
+    m = LINE_RE_FLIPPER_BLE.match(line.strip())
+    if not m:
+        return None
+    # groups: (device_name, mac, extra, auth_mode, first_seen, channel, rssi, lat, lon, alt, acc, data_type)
+    (
+        device_name,
+        mac,
+        _extra,
+        auth_mode,
+        first_seen,
+        channel,
+        rssi,
+        lat,
+        lon,
+        alt,
+        acc,
+        data_type,
+    ) = m.groups()
+
+    # Normalize to the common tuple (use device_name as "ssid" field downstream)
+    ssid_or_name = (device_name or "").strip() or None
+    return (
+        mac,
+        ssid_or_name,
+        auth_mode,
+        first_seen,
+        channel,
+        rssi,
+        lat,
+        lon,
+        alt,
+        acc,
+        data_type,
+    )
+
+
+# -----------------------------
+# Core processor (single source of truth)
+# -----------------------------
+
+
+def _process_format_flipper_marauder_core(
+    lines,
+    parser_fn,
+    device_source,
+    uploaded_by,
 ):
+    """
+    Core processing loop:
+    - Parse each line via parser_fn
+    - Normalize types (datetime/int/Decimal)
+    - Apply minimal validation rules
+    - Bulk upsert into Wardriving
+    """
     rows = []
+
     for line in lines:
-        g = _parse_marauder_line(line)
+        g = parser_fn(line)
         if not g:
             continue
+
         (
             mac,
-            ssid,
+            ssid_or_name,
             auth_mode,
             first_seen,
             channel,
@@ -221,28 +369,26 @@ def process_format_flipper_marauder(
             data_type,
         ) = g
 
-        ssid = ssid or None
-        if first_seen:
-            try:
-                first_seen = make_aware(
-                    datetime.strptime(first_seen, "%Y-%m-%d %H:%M:%S")
-                )
-            except Exception:
-                first_seen = None
-        if isinstance(first_seen, str):
-            first_seen = None
+        mac = (mac or "").strip().lower() or None
+        ssid_or_name = (ssid_or_name or "").strip() or None
+        auth_mode = (auth_mode or "").strip() or None
+        data_type = (data_type or "").strip() or None
 
-        try:
-            channel = int(channel) if channel and channel.isdigit() else None
-            rssi = int(rssi) if rssi not in (None, "") else None
-            lat = Decimal(lat) if lat else None
-            lon = Decimal(lon) if lon else None
-            alt = Decimal(alt) if alt else None
-            acc = Decimal(acc) if acc else None
-        except Exception:
+        first_seen = _parse_dt_aware(first_seen)
+
+        channel = _to_int(channel)
+        rssi = _to_int(rssi)
+        lat = _to_dec(lat)
+        lon = _to_dec(lon)
+        alt = _to_dec(alt)
+        acc = _to_dec(acc)
+
+        # Minimal validation rules (adjust if you want to accept edge cases)
+        if mac is None:
             continue
-
         if channel is None:
+            continue
+        if lat is None or lon is None:
             continue
         if lat == 0 and lon == 0:
             continue
@@ -251,18 +397,19 @@ def process_format_flipper_marauder(
             "uploaded_by": uploaded_by,
             "mac": mac,
             "channel": channel,
-            "ssid": ssid,
+            "ssid": ssid_or_name,  # For BLE we store device_name here to reuse the same model
             "auth_mode": auth_mode,
             "first_seen": first_seen,
             "current_latitude": lat,
             "current_longitude": lon,
             "altitude_meters": alt,
             "accuracy_meters": acc,
-            "type": data_type,
+            "type": data_type,  # WIFI or BLE
             "rssi": rssi,
             "device_source": device_source,
         }
-        # Limpia None si no deseas sobreescribir con nulos
+
+        # Remove None values so we don't overwrite existing DB fields with nulls
         row = {k: v for k, v in row.items() if v is not None}
         rows.append(row)
 
@@ -284,8 +431,63 @@ def process_format_flipper_marauder(
             "device_source",
         ],
         only_fields=["id", "uploaded_by", "mac", "channel", "rssi"],
-        # base_filter={'device_source': device_source},  # opcional
         chunk_size=1000,
+    )
+
+
+# -----------------------------
+# Public APIs by technology (thin wrappers pointing to the core)
+# -----------------------------
+
+
+def process_format_flipper_marauder_wifi(
+    lines=list(),
+    device_source=SourceDevice.FLIPPER_DEV_BOARD,
+    uploaded_by="Without Owner",
+):
+    """Process Marauder Flipper-format WiFi lines."""
+    return _process_format_flipper_marauder_core(
+        lines=lines,
+        parser_fn=_parse_marauder_wifi_line,
+        device_source=device_source,
+        uploaded_by=uploaded_by,
+    )
+
+
+def process_format_flipper_marauder_ble(
+    lines=list(),
+    device_source=SourceDevice.FLIPPER_DEV_BOARD,
+    uploaded_by="Without Owner",
+):
+    """Process Marauder Flipper-format BLE lines."""
+    return _process_format_flipper_marauder_core(
+        lines=lines,
+        parser_fn=_parse_marauder_ble_line,
+        device_source=device_source,
+        uploaded_by=uploaded_by,
+    )
+
+
+# Process some files with structure from project Marauder ESP32 in flipper format (has an index for follow the wardrive)
+# Source to project firmware: https://github.com/justcallmekoko/ESP32Marauder/
+def process_format_flipper_marauder(
+    lines=list(),
+    device_source=SourceDevice.FLIPPER_DEV_BOARD,
+    uploaded_by="Without Owner",
+):
+    """
+    Process mixed Marauder output (BLE + WiFi).
+    Tries BLE first (many BLE lines do not have the numeric index), then WiFi.
+    """
+
+    def _auto_parser(line: str):
+        return _parse_marauder_ble_line(line) or _parse_marauder_wifi_line(line)
+
+    return _process_format_flipper_marauder_core(
+        lines=lines,
+        parser_fn=_auto_parser,
+        device_source=device_source,
+        uploaded_by=uploaded_by,
     )
 
 
