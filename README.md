@@ -77,7 +77,7 @@ Both are directly compatible with the processing system.
 
 -   🐉 **ESP32 Marauder:**
     Options: `flipper dev board`, `flipper dev board pro`,
-    `marauder v4`, `marauder v6`, `flipper bffb`, `marauder esp32`, `wardriver uk`
+    `marauder v4`, `marauder v6`, `flipper bffb`, `marauder esp32`, `wardriver uk`, `kiisu dev board`
     https://github.com/justcallmekoko/ESP32Marauder
 
 -   📶 **LILYGO T-SIM7000G-16MB (custom firmware)**
